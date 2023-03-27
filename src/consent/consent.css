@@ -1,0 +1,15 @@
+.consent_main{
+    padding: 30px;
+    line-height: 10px;
+}
+h2, h3{
+    text-align: center;
+}
+.consent_content{
+    padding: 30px;
+    line-height: 20px;
+}
+.consent_agree{
+    padding-bottom: 20px;
+}
+

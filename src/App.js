@@ -2,14 +2,14 @@ import logo from './logo.svg';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
-import Consent from './consent/Consent';
+import ConsentForm from './consent/Consent';
 
 function App() {
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Consent/>} />
+        <Route path="/" element={<ConsentForm/>} />
       </Routes>
    </Router>
   );
