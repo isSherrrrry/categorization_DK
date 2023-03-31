@@ -1,5 +1,10 @@
+body{
+    background-color: #fbfefe;
+}
 .consent_main{
-    padding: 30px;
+    padding-left: 15vw;
+    padding-right: 15vw;
+    padding-top: 40px;
     line-height: 10px;
 }
 h2, h3{

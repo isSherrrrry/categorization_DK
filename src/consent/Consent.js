@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Button, Checkbox, Container, Header } from "semantic-ui-react";
 import './consent.css'
 
 
@@ -20,6 +19,7 @@ const ConsentForm = () => {
       alert("Please accept the terms to continue.");
     }
   };
+
 
   return (
     <div className="consent_main">

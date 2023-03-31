@@ -1,0 +1,28 @@
+.presurvey_main{
+    padding: 30px;
+    line-height: 10px;
+    text-align: center;
+}
+.presurvey_main h2{
+    text-align: center;
+    padding-bottom: 40px;
+    padding-top: 20px;
+}
+.presurvey_main p{
+    font-size: 16px;
+}
+.presurvey_main iframe{
+    margin-top: 30px;
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.6);
+}
+.presurvey_main .userCode{
+    margin-top: 30px;
+}
+.presurvey_main .userCode label{
+    font-size: 16px;
+}
+.presurvey_main .continue_button{
+    margin-top: 30px;
+    width: 100px;
+    fosnit-size: 16px;
+}
