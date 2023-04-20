@@ -1,86 +1,142 @@
-import React, { useEffect, useRef, useState } from 'react';
-import * as d3 from 'd3';
+// src/ScatterPlot.js
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // added import
+import Plot from './Plot';
+import Papa from 'papaparse';
+import { Dropdown } from 'semantic-ui-react';
+import React, { useState, useEffect, useRef } from 'react';
+import 'semantic-ui-css/semantic.min.css';
+
+function ScatterPlot() {
+  const [data, setData] = useState([]);
+  const [columns, setColumns] = useState([]);
+  const [xColumn, setXColumn] = useState(null);
+  const [yColumn, setYColumn] = useState(null);
+  const [zoomTransform, setZoomTransform] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const scatterplotRef = useRef(null);
+  const webgazer = require('webgazer');
+  
 
 
-const data = [
-    // Add your data points here
-    { x: 34, y: 78, category: null },
-    { x: 84, y: 15, category: null },
-    { x: 104, y: 425, category: null },
-    { x: 234, y: 5, category: null },
-    { x: 14, y: 105, category: null }
-    // ...
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/credit_removed.csv');
+      const csvData = await response.text();
+      const parsedData = Papa.parse(csvData, {
+        header: true,
+        dynamicTyping: true,
+      });
+      setData(parsedData.data);
+      setData(parsedData.data.map(d => ({ ...d, category: null })));
+      setColumns(parsedData.meta.fields);
+    };
+    fetchData();
+  }, []);
 
-  const Scatterplot = () => {
-    const svgRef = useRef();
-    const [selectedCategory, setSelectedCategory] = useState(null);
-  
-    useEffect(() => {
-      const svg = d3.select(svgRef.current);
-      const width = parseInt(svg.attr("width"));
-      const height = parseInt(svg.attr("height"));
-  
-      const xScale = d3.scaleLinear()
-        .domain(d3.extent(data, d => d.x))
-        .range([40, width - 20]);
-  
-      const yScale = d3.scaleLinear()
-        .domain(d3.extent(data, d => d.y))
-        .range([height - 20, 20]);
-  
-      const colorMap = {
-        a: 'red',
-        b: 'green',
-        c: 'blue'
-      };
-  
-      const xAxis = d3.axisBottom(xScale);
-      const yAxis = d3.axisLeft(yScale);
-  
-      svg.append("g")
-        .attr("transform", `translate(0, ${height - 20})`)
-        .call(xAxis);
-  
-      svg.append("g")
-        .attr("transform", "translate(40, 0)")
-        .call(yAxis);
-  
-      if (!svg.selectAll(".point").size()) {
-        svg.selectAll(".point")
-          .data(data)
-          .enter()
-          .append("circle")
-          .attr("class", "point")
-          .attr("r", 5)
-          .attr("cx", d => xScale(d.x))
-          .attr("cy", d => yScale(d.y))
-          .style("fill", "white")
-          .style("stroke", "black");
+
+  useEffect(() => {
+    if (location.state) {
+      setXColumn(location.state.xColumn);
+      setYColumn(location.state.yColumn);
+    }
+    
+  }, [location.state]);
+
+  const handleContinueClick = () => {
+    const coloredPoints = data.filter(d => d.category !== null);
+    if (coloredPoints.length >= 25) {
+      navigate('/selectaxis_car');
+    } else {
+      alert('Please color at least 25 points before continuing.');
+    }
+  }
+
+  useEffect(() => {
+    async function initializeWebGazer() {
+      if (webgazer) {
+        try {
+          webgazer.start();
+        } catch (error) {
+          console.error('Error initializing WebGazer:', error);
+        }
       }
+    }
+    initializeWebGazer();
   
-      svg.selectAll(".point")
-        .on("click", function (event, d) {
-          if (selectedCategory) {
-            d.category = selectedCategory;
-            d3.select(this)
-              .style("fill", colorMap[d.category]);
-          }
-        });
+    return () => {
+      initializeWebGazer();
+    };
+  }, []);
   
-    }, [selectedCategory]);
-  
-    return (
-        <div>
-        <div>
-          <button onClick={() => setSelectedCategory('a')}>Select Category A</button>
-          <button onClick={() => setSelectedCategory('b')}>Select Category B</button>
-          <button onClick={() => setSelectedCategory('c')}>Select Category C</button>
-        </div>
-        <svg ref={svgRef} width="600" height="400" />
-      </div>
-    );
-  };
   
 
-export default Scatterplot;
+
+
+
+  return (
+    <div className="scatterplot">
+      <div class="hover-container">
+        <div class="hover-trigger">
+          Help
+        </div>
+        <div class="info-bar">
+          <p>Here's the help text</p>
+        </div>
+      </div>
+      <div className='x-axis'>
+        <Dropdown
+          placeholder={xColumn}
+          selection
+          options={columns
+            .filter(column => !['Customer ID', 'Name', 'Credit Score', 'creditID'].includes(column))
+            .map(column => ({
+              key: `x-${column}`,
+              text: column,
+              value: column
+            }))}
+          onChange={(e, { value }) => setXColumn(value)}
+        />
+      </div>
+      <div className='y-axis'>
+        <Dropdown
+          placeholder={yColumn}
+          selection
+          options={columns
+            .filter(column => !['Customer ID', 'Name', 'Credit Score', 'creditID'].includes(column))
+            .map(column => ({
+              key: `y-${column}`,
+              text: column,
+              value: column
+            }))}
+          onChange={(e, { value }) => setYColumn(value)}
+        />
+      </div>
+
+      <div className='buttons'>
+        <button onClick={() => setSelectedCategory('Good')} class="ui button good_button">Good</button>
+        <button onClick={() => setSelectedCategory('Fair')} class="ui button fair_button">Fair</button>
+        <button onClick={() => setSelectedCategory('Poor')} class="ui button poor_button">Poor</button>
+        <button onClick={() => setSelectedCategory('Null')} class="ui button">Reset</button>
+      </div>
+
+      <div className='scatterplot_plot'>
+      <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform} />
+
+      </div>
+
+      <div className='continue_next'>
+      <button onClick={handleContinueClick} className="ui primary button">
+          Continue
+        </button>
+    </div>
+
+    </div>
+
+    
+  );
+}
+
+export default ScatterPlot;
