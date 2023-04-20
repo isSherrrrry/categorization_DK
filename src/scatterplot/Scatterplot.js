@@ -17,7 +17,7 @@ function ScatterPlot() {
   const location = useLocation();
   const navigate = useNavigate();
   const scatterplotRef = useRef(null);
-  const webgazer = require('webgazer');
+  const webgazer = window.webgazer;
   
 
 
@@ -58,23 +58,28 @@ function ScatterPlot() {
     async function initializeWebGazer() {
       if (webgazer) {
         try {
-          webgazer.start();
-        } catch (error) {
+          webgazer.begin();
+          webgazer.showVideoPreview(false).showPredictionPoints(false);
+          webgazer.setGazeListener(function(event){
+            var currentdate = new Date(); 
+            var datetime = currentdate.getHours() + ":"  
+                  + currentdate.getMinutes() + ":" 
+                  + currentdate.getSeconds() + ":"
+                  + currentdate.getMilliseconds();
+            console.log(event);            
+          }).begin();
+          
+          } catch (error) {
           console.error('Error initializing WebGazer:', error);
         }
       }
     }
     initializeWebGazer();
-  
     return () => {
       initializeWebGazer();
     };
   }, []);
   
-  
-
-
-
 
   return (
     <div className="scatterplot">
