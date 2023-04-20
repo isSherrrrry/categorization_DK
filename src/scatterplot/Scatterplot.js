@@ -59,7 +59,7 @@ function ScatterPlot() {
       if (webgazer) {
         try {
           webgazer.begin();
-          webgazer.showVideoPreview(false).showPredictionPoints(false);
+          webgazer.showVideoPreview(true).showPredictionPoints(false);
           webgazer.setGazeListener(function(event){
             var currentdate = new Date(); 
             var datetime = currentdate.getHours() + ":"  
