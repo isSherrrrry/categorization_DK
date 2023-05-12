@@ -97,3 +97,8 @@
   background-color: #ccc;
   color: #fff;
 }
+button .active {
+  border-color: black !important;
+  border-width: 2px !important;
+  opacity: 0.4 !important;
+}

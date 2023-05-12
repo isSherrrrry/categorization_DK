@@ -6,6 +6,7 @@ import Papa from 'papaparse';
 import { Dropdown } from 'semantic-ui-react';
 import React, { useState, useEffect, useRef } from 'react';
 import 'semantic-ui-css/semantic.min.css';
+import './plot.css'
 
 function ScatterPlot() {
   const [data, setData] = useState([]);
@@ -18,12 +19,14 @@ function ScatterPlot() {
   const navigate = useNavigate();
   const scatterplotRef = useRef(null);
   const webgazer = window.webgazer;
+  const [activeButton, setActiveButton] = useState(null);
+
   
 
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/credit_removed.csv');
+      const response = await fetch('/dog_removed.csv');
       const csvData = await response.text();
       const parsedData = Papa.parse(csvData, {
         header: true,
@@ -48,7 +51,7 @@ function ScatterPlot() {
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
     if (coloredPoints.length >= 25) {
-      navigate('/selectaxis_car');
+      navigate('/selectaxis');
     } else {
       alert('Please color at least 25 points before continuing.');
     }
@@ -59,7 +62,7 @@ function ScatterPlot() {
       if (webgazer) {
         try {
           webgazer.begin();
-          webgazer.showVideoPreview(true).showPredictionPoints(false);
+          webgazer.showVideoPreview(false).showPredictionPoints(false);
           webgazer.setGazeListener(function(event){
             var currentdate = new Date(); 
             var datetime = currentdate.getHours() + ":"  
@@ -121,10 +124,34 @@ function ScatterPlot() {
       </div>
 
       <div className='buttons'>
-        <button onClick={() => setSelectedCategory('Good')} class="ui button good_button">Good</button>
-        <button onClick={() => setSelectedCategory('Fair')} class="ui button fair_button">Fair</button>
-        <button onClick={() => setSelectedCategory('Poor')} class="ui button poor_button">Poor</button>
-        <button onClick={() => setSelectedCategory('Null')} class="ui button">Reset</button>
+      <button 
+            onClick={() => {setSelectedCategory('Bernedoodle'); setActiveButton('Bernedoodle');}} 
+            className={`ui button Bernedoodle_button ${activeButton === 'Bernedoodle' ? 'active' : ''}`}
+            style={activeButton === 'Bernedoodle' ? {borderColor: 'black'} : {}}
+          >
+            Bernedoodle
+          </button>
+          <button 
+            onClick={() => {setSelectedCategory('ShihTzu'); setActiveButton('ShihTzu');}} 
+            className={`ui button ShihTzu_button ${activeButton === 'ShihTzu' ? 'active' : ''}`}
+            style={activeButton === 'ShihTzu' ? {borderColor: 'black'} : {}}
+          >
+            ShihTzu
+          </button>
+          <button 
+            onClick={() => {setSelectedCategory('AmericanBulldog'); setActiveButton('AmericanBulldog');}} 
+            className={`ui button AmericanBulldog_button ${activeButton === 'AmericanBulldog' ? 'active' : ''}`}
+            style={activeButton === 'AmericanBulldog' ? {borderColor: 'black'} : {}}
+          >
+            AmericanBulldog
+          </button>
+          <button 
+            onClick={() => {setSelectedCategory('Null'); setActiveButton('Null');}} 
+            className={`ui button ${activeButton === 'Null' ? 'active' : ''}`}
+            style={activeButton === 'Null' ? {borderColor: 'black'} : {}}
+          >
+            Reset
+          </button>
       </div>
 
       <div className='scatterplot_plot'>

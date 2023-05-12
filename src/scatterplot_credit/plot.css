@@ -1,0 +1,104 @@
+.scatterplot{
+  position: relative;
+  width: 100%;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+}
+.tooltip {
+  position: absolute;
+  text-align: left;
+  font-size:c14px;
+  line-height: 17px;
+  padding: 8px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  pointer-events: none;
+  top: -20px;
+}
+.x-axis{
+  position: absolute;
+  bottom: 30px;
+  left:600px;
+}
+.y-axis{
+  position: absolute;
+  left: 20px;
+  top: 50%;
+}
+
+.select_axes{
+  width:100vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  line-height: 50px;
+}
+
+.select_axes button{
+  position: relative;
+  top: 30px;
+}
+
+.good_button{
+  background-color: #BBD6B8 !important;
+}
+.fair_button{
+  background-color: #FAEDCD !important;
+}
+.poor_button{
+  background-color: #E74646 !important;
+}
+.scatterplot_plot{
+  margin-left: 200px;
+}
+.buttons{
+  padding-top: 30px;
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+.buttons button~button{
+  margin-left: 20px !important;
+}
+.continue_next{
+  position: absolute;
+  bottom: 30px;
+  right: 100px;
+}
+
+.hover-container {
+  position: relative;
+}
+
+.info-bar { 
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.hover-container:hover .info-bar {
+  display: block;
+}
+
+.hover-trigger {
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #ccc;
+  color: #fff;
+}
+button .active {
+  border-color: black !important;
+  border-width: 2px !important;
+  opacity: 0.4 !important;
+}

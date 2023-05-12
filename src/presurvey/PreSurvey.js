@@ -18,7 +18,7 @@ const ConsentForm = () => {
     if (userCode === requiredCode) {
       // Proceed to the next step in the study.
       console.log("Continuing with the study...");
-      navigate("/selectaxes");
+      navigate("/webgazer_check");
     } else {
       alert("Please enter the correct code to proceed.");
     }
