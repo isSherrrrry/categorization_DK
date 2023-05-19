@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ConsentForm/>} />
         <Route path="/presurvey" element={<PreSurvey/>} />
-        <Route path="/selectaxis_car" element={<SelectAxes/>} />
+        <Route path="/selectaxis_credit" element={<SelectAxes/>} />
         <Route path="/scatterplot" element={<Scatterplot/>} />
         <Route path="/postsurvey" element={<PostSurvey/>} />
         <Route path="/webgazer_check" element={<Check/>} />

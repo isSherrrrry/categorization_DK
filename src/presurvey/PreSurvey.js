@@ -29,7 +29,7 @@ const ConsentForm = () => {
       <h2>Pre-Survey</h2>
       <p>Please copy and paste USERID into the field of the survey</p>
       <p>Please be sure to scroll through to complete the entire survey before continuing</p>
-      <iframe src="https://emorycollege.co1.qualtrics.com/jfe/form/SV_eJ02rOjxcLBWakm" width="700" height="2700" frameborder="0" marginheight="100" marginwidth="0" top="30">Loading...</iframe>
+      <iframe src="https://emorycollege.co1.qualtrics.com/jfe/form/SV_eJ02rOjxcLBWakm" width="1200" height="2000" frameborder="0" marginheight="100" marginwidth="0" top="30">Loading...</iframe>
       <div className="userCode">
         <label htmlFor="userCode">Enter the code provided: </label>
         <Input
