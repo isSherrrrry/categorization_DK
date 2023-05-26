@@ -7,6 +7,7 @@ import "./presurvey.css";
 
 const ConsentForm = () => {
   const [userCode, setUserCode] = useState("");
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
   const requiredCode = "6cjh5a";
   const navigate = useNavigate(); 
 
@@ -27,7 +28,7 @@ const ConsentForm = () => {
   return (
     <div className="presurvey_main">
       <h2>Post Survey</h2>
-      <p>Please copy and paste USERID into the field of the survey</p>
+      <p>Please copy and paste <b>{userId}</b> into the field of the survey</p>
       <p>Please be sure to scroll through to complete the entire survey before continuing</p>
       <iframe src="https://emorycollege.co1.qualtrics.com/jfe/form/SV_ePQjbMTWJlMu366" width="700" height="2700" frameborder="0" marginheight="100" marginwidth="0" top="30">Loading...</iframe>
       <div className="userCode">

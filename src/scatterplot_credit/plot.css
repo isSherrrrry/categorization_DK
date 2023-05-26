@@ -45,13 +45,13 @@
   top: 30px;
 }
 
-.good_button{
+.Good_button{
   background-color: #BBD6B8 !important;
 }
-.fair_button{
+.Fair_button{
   background-color: #FAEDCD !important;
 }
-.poor_button{
+.Poor_button{
   background-color: #E74646 !important;
 }
 .scatterplot_plot{
@@ -84,6 +84,7 @@
   background-color: #fff;
   padding: 10px;
   border: 1px solid #ccc;
+  width: 500px;
 }
 
 .hover-container:hover .info-bar {

@@ -91,7 +91,7 @@ function ScatterPlot() {
           Help
         </div>
         <div class="info-bar">
-          <p>Here's the help text</p>
+          <p>Using the information provided about the cars when hovering over the points, color each circle in the scatterplot by which type of car you think it is. By clicking the colored label on the top, you may start to color the point with the corresponding label. If you wanted to change your previous labels, directly click the circle in the scatterplot after clicking the new color label on the top.</p>
         </div>
       </div>
       <div className='x-axis'>

@@ -29,24 +29,78 @@ const ConsentForm = () => {
     <div className="consent_main">
       <h2>CONSENT DOCUMENT FOR ENROLLING ADULT PARTICIPANTS IN A RESEARCH STUDY</h2>
       <h3>Project Title: Exploring Decision Making Behavior</h3>
-      <p><b>Investigators: Emily Wall, Mengyu Chen, and Yijun Liu</b></p>
+      <p><b>Principle Investigator: Dr. Emily Wall</b></p>
+      <p><b>Funding Source: Emory Computer Science Department</b></p>
       <p>
         <b>Protocol and Consent Title: Decision Making with Interactive
-        Visualizations v1.0</b>
+        Visualizations</b>
       </p>
-      <p className="consent_content">
-        You are being asked to be a volunteer in a research study. <br/><br/>
-        <u><b>Purpose:</b></u> The purpose of this study is to explore the relationship between expertise and decision-making behavior.<br/><br/>
-        <u><b>Exclusion/Inclusion Criteria:</b></u> Participants in this study must be at least 18 years of age and have general familiarity with using web-based systems.<br/><br/>
-        <u><b>Procedures:</b></u> If you decide to be in this study, your part will involve approximately 1 hour, during which you will complete a simple knowledge background questionnaire, watch a demonstration of the interface, and perform a set of tasks with an interactive visualization. With your permission we will record your interactions using logging software that will capture things like clicks and hovers.<br/><br/>
-        <u><b>Risks or Discomforts:</b></u> The risks involved are no greater than those involved in daily activities such as using a laptop for web-browsing.<br/><br/>
-        <u><b>Benefits:</b></u> You are not likely to benefit in any way from joining this study. We hope that what we learn will help to enhance our understanding of user interaction patterns related to decision making.<br/><br/>
-        <u><b>Compensation to You:</b></u> Compensation includes a $10 Amazon gift card for each completed session of the study.<br/><br/>
-        <u><b>Confidentiality:</b></u> Your privacy will be protected to the extent allowed by the law. To protect your privacy, your records will be kept under a code number rather than by name. Interaction logs will be stored on an external storage device. Your records, including interaction logs, questionnaire responses, and consent form will be kept in locked files and only study staff will be allowed to look at them. Your name and any other fact that might point to you will not appear when results of this study are presented or published. Federal regulations require that all study data be stored for a minimum of 3 years. After analysis and publication, all records of your participation in the study will be destroyed. To make sure that this research is being carried out properly, the Emory IRB may review study records. Your privacy will be protected to the extent allowed by the law.<br/><br/>
-        <u><b>Costs to You:</b></u> If you participate in this study, you will be responsible for any data costs incurred while participating in the online study.<br/><br/>
-        <u><b>Participant Rights:</b></u> Your participation in this study is voluntary. You do not have to be in this study if you don't want to be. You have the right to change your mind and leave the study at any time without giving any reason and without penalty. If you decide not to finish the study, you have the right to withdraw any data collected about you. Should you decide to withdraw from the study, your questionnaires will be shredded. Any new information that may make you change your mind about being in this study will be given to you. You will be given a copy of this consent form to keep. You do not waive any of your legal rights by signing this consent form.<br/><br/>
-        <u><b>Questions about the Study:</b></u> If you have any questions about the study, you may contact Prof. Emily Wall at emily.wall@emory.edu.
-      </p>
+      <p class="consent_content">
+  <u><b>Introduction</b></u><br/>
+  You are being asked to be in a research study. This form is designed to tell you everything you need to think about before you decide to consent (agree) to be in the study or not to be in the study.  It is entirely your choice.  If you decide to take part, you can change your mind later on and withdraw from the research study.  You can skip any questions that you do not wish to answer.<br/><br/>
+
+  Before making your decision:<br/>
+  <ul>
+    <li>Please carefully read this form or have it read to you</li>
+    <li>Please ask questions about anything that is not clear</li>
+  </ul>
+  You can take a copy of this consent form, to keep. Feel free to take your time thinking about whether you would like to participate. By signing this form you will not give up any legal rights.<br/><br/>
+
+  <u><b>Study Overview</b></u><br/>
+  The purpose of this study is to observe decisions that subjects make using data presented in a visualization interface.<br/><br/>
+
+  <u><b>Procedures</b></u><br/>
+  Before you begin the main part of the study: You will need to have the following screening tests / procedures to find out if you can be in the main part of the study. Complete a brief survey to verify you are eligible to participate (over 18 years old, and self-report relevant domain expertise and prior experience with visualization.
+  This screening questionnaire will collect your email address. If you are eligible to participate, this information will be used to contact you to schedule a time for your participation in the study. If you are ineligible to participate, your data will be deleted.<br/>
+  During the main part of the study: You will complete the following procedure. <br/>
+  <ul>
+    <li>You will first be asked to complete a decision making task by using a data visualization tool.</li>
+    <li>Some of the participants will be invited for a second follow-up survey.</li>
+  </ul>
+  Each study session will last between 5-30 minutes (Prolific) to 1 hour (in-lab). We will invite some of the participants for a second follow-up survey that will last approximately the same amount of time.<br/><br/>
+
+  <u><b>Risks and Discomforts</b></u><br/>
+  We do not anticipate any problems that would affect risk level, participants’ willingness to participate, or feasibility of doing the research. The risks involved are no greater than those involved in daily activities such as using a laptop for web browsing.<br/><br/>
+
+  <u><b>New Information</b></u><br/>
+  It is possible that the researchers will learn something new during the study about the risks of being in it.  If this happens, they will tell you about it. Then you can decide if you want to continue to be in this study or not.  You may be asked to sign a new consent form that includes the new information if you decide to stay in the study.<br/><br/>
+
+  <u><b>Benefits</b></u><br/>
+  This study is not designed to benefit you directly. This study is designed to learn more about observing decisions that subjects make using data presented in a visualization interface. The study results may be used to help others in the future.<br/><br/>
+
+  <u><b>Compensation</b></u><br/>
+  You will be compensated at a rate of $10 per hour for each completed study session.  If you do not finish the study, you will be paid for the sessions you have completed. <br/><br/>
+
+  <u><b>Confidentiality</b></u><br/>
+  Certain offices and people other than the researchers may look at study records. Government agencies and Emory employees overseeing proper study conduct may look at your study records.  These offices include the funder(s), the Emory Institutional Review Board, the Emory Office of Compliance. Study funders may also look at your study records.   Emory will keep any research records we create private to the extent we are required to do so by law.  A study number rather than your name will be used on study records wherever possible. Your name and other facts that might point to you will not appear when we present this study or publish its results. <br/>
+  Study records can be opened by court order. They may also be produced in response to a subpoena or a request for production of documents.<br/><br/>
+
+  <u><b>Storing and Sharing your Information</b></u><br/>
+  De-identified data from this study (data that has been stripped of all information that can identify you), may be placed into public databases where, in addition to having no direct identifiers, researchers will need to sign data use agreements before accessing the data. We will remove or code any personal information that could identify you before your information is shared. This will ensure that, by current scientific standards and known methods, it is extremely unlikely that anyone would be able to identify you from the information we share. Despite these measures, we cannot guarantee anonymity of your personal data.<br/>
+  Your data from this study may be useful for other research being done by investigators at Emory or elsewhere. To help further science, we may provide your deidentified data and/or specimens to other researchers. If we do, we will not include any information that could identify you. If your data or specimens are labeled with your study ID, we will not allow the other investigators to link that ID to your identifiable information.<br/>
+  No results returned to participants<br/>
+  In general, we will not give you any individual results from the study of the samples you give us.<br/><br/>
+
+  <u><b>Withdrawal from the Study</b></u><br/>
+  You have the right to leave a study at any time without penalty.  <br/>
+  The researchers also have the right to stop your participation in this study without your consent for any reason, especially if they believe it is in your best interest or if you were to object to any future changes that may be made in the study plan.  <br/><br/>
+
+  <u><b>Contact Information</b></u><br/>
+  Contact Emily Wall at emily.wall@emory.edu:<br/>
+  <ul>
+    <li>If you have any questions about this study or your part in it,</li>  
+    <li>If you have questions, or concerns about the research</li>
+  </ul>
+
+  Contact the Emory Institutional Review Board at 404-712-0720 or 877-503-9797 or irb@emory.edu:<br/>
+  <ul>
+    <li>If you have questions about your rights as a research participant.</li>
+    <li>If you have complaints about the research or an issue you rather discuss with someone outside the research team.</li>
+  </ul>
+
+  You may also let the IRB know about your experience as a research participant through our Research Participant Survey at <a href="https://tinyurl.com/ycewgkke">https://tinyurl.com/ycewgkke</a>.
+</p>
+
       
       <div className="ui checkbox consent_agree"><input type="checkbox" defaultChecked={accepted} onChange={handleAcceptChange}/><label>I accept</label></div><br/>
       <button onClick={handleContinue} disabled={!accepted} class="ui blue button">Continue</button>

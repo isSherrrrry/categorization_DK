@@ -50,10 +50,10 @@ function ScatterPlot() {
 
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
-    if (coloredPoints.length >= 25) {
-      navigate('/selectaxis');
+    if (coloredPoints.length >= 12) {
+      navigate('/selectaxis_credit');
     } else {
-      alert('Please color at least 25 points before continuing.');
+      alert('Please color at least 12 points before continuing.');
     }
   }
 

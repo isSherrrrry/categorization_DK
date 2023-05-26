@@ -12,6 +12,7 @@ import SelectAxes_dog from './scatterplot_dog/SelectAxes';
 import Scatterplot_car from './scatterplot_car/Scatterplot';
 import SelectAxes_car from './scatterplot_car/SelectAxes';
 import ThankYou from './presurvey/ThankYou'
+import TutorialPage from './consent/Tutorial';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/selectaxis_car" element={<SelectAxes_car/>} />
         <Route path="/scatterplot_car" element={<Scatterplot_car/>} />
         <Route path="/thankyou" element={<ThankYou/>} />
+        <Route path="/tutorial" element={<TutorialPage/>} />
 
       </Routes>
    </Router>

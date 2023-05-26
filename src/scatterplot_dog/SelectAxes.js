@@ -8,6 +8,14 @@ import './plot.css'
 
 
 function SelectAxes() {
+
+  useEffect(() => {
+    if (!localStorage.getItem("alreadyLoaded")) {
+      localStorage.setItem("alreadyLoaded", "true");
+      window.location.reload();
+    }
+  }, []);
+  
   const [columns, setColumns] = useState([]);
   const [xColumn, setXColumn] = useState(null);
   const [yColumn, setYColumn] = useState(null);
