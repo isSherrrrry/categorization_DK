@@ -19,12 +19,12 @@
 }
 .x-axis{
   position: absolute;
-  bottom: 30px;
-  left:600px;
+  bottom: 10px;
+  left: 45%;
 }
 .y-axis{
   position: absolute;
-  left: 20px;
+  left: 2vw;
   top: 50%;
 }
 
@@ -55,7 +55,8 @@
   background-color: #E74646 !important;
 }
 .scatterplot_plot{
-  margin-left: 200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .buttons{
   padding-top: 30px;

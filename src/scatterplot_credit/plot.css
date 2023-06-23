@@ -55,7 +55,8 @@
   background-color: #E74646 !important;
 }
 .scatterplot_plot{
-  margin-left: 200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .buttons{
   padding-top: 30px;

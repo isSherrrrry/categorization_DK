@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import './plot.css';
 // import logEvent from '../Logger';
 
-const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform }) => {
+const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform, hovered, setHovered}) => {
   const svgRef = useRef();
   const zoomRef = useRef();
 
@@ -19,6 +19,19 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
   };
 
   const tooltipRef = useRef();
+  const jitterAmount = 10;
+
+// Generate an array of random numbers between -jitterAmount and jitterAmount
+  const randomNumbers = [
+    -0.064, 0.052, -0.027, -0.008, -0.045, 0.039, -0.019, 0.087, -0.099, 0.01, -0.074, 0.026, 0.096, -0.055, 0.007
+  ];
+
+  // Add fixed jittering to the data
+  const jitteredData = data.map((d, i) => ({
+    ...d,
+    jitterX: randomNumbers[i] * jitterAmount,
+    jitterY: randomNumbers[i] * jitterAmount/0.123,
+  }));
 
 
   useEffect(() => {
@@ -112,6 +125,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 
     const onMouseOver = (event, d) => {
         const tooltip = d3.select(tooltipRef.current);
+        setHovered(true);
         let content = '';
         for (const key in d) {
             content += `<b>${key}:</b> ${d[key]}<br>`;
@@ -167,6 +181,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       .on("mouseover", onMouseOver)
       .on("mouseout", onMouseOut)
       .on("click", onClick);
+    
 
     // Apply lower opacity to gridlines
     svg.selectAll('.x-gridlines .tick line')
@@ -182,7 +197,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 
     svg.call(zoom);
 
-    }, [data, xColumn, yColumn, setData, selectedCategory, setZoomTransform]);
+    }, [data, xColumn, yColumn, setData, selectedCategory, setZoomTransform, hovered, setHovered]);
     
 
 return (

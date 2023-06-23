@@ -1,12 +1,12 @@
-// src/ScatterPlot.js
 import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom'; // added import
+import { useNavigate } from 'react-router-dom';
 import Plot from './Plot';
 import Papa from 'papaparse';
 import { Dropdown } from 'semantic-ui-react';
 import React, { useState, useEffect, useRef } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import './plot.css'
+import { hover } from '@testing-library/user-event/dist/hover';
 
 function ScatterPlot() {
   const [data, setData] = useState([]);
@@ -21,6 +21,36 @@ function ScatterPlot() {
   const webgazer = window.webgazer;
   const [activeButton, setActiveButton] = useState(null);
 
+  const [helpVisible, setHelpVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [axisChanged, setAxisChanged] = useState(false);
+  const [pointLabeled, setPointLabeled] = useState(false);
+  const [pointReset, setPointReset] = useState(false);
+  const [allLabeled, setAllLabeled] = useState(false);
+
+  const toggleHelp = () => {
+    setHelpVisible(!helpVisible);
+  };
+
+  const handleLabelClick = (event) => {
+    setPointLabeled(true);
+  };
+
+  const handleResetClick = (event) => {
+    setPointReset(true);
+  };
+
+  const handleAxisChange = (event) => {
+    setAxisChanged(true);
+  };
+
+  const handlePointHover = (event) => {
+    setHovered(true);
+  };
+
+  const handleAllLabeled = (event) => {
+    setAllLabeled(true);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,13 +67,11 @@ function ScatterPlot() {
     fetchData();
   }, []);
 
-
   useEffect(() => {
     if (location.state) {
       setXColumn(location.state.xColumn);
       setYColumn(location.state.yColumn);
     }
-    
   }, [location.state]);
 
   const handleContinueClick = () => {
@@ -55,53 +83,50 @@ function ScatterPlot() {
     }
   }
 
-  useEffect(() => {
-    async function initializeWebGazer() {
-      if (webgazer) {
-        try {
-          webgazer.begin();
-          webgazer.showVideoPreview(false).showPredictionPoints(false);
-          webgazer.setGazeListener(function(event){
-            var currentdate = new Date(); 
-            var datetime = currentdate.getHours() + ":"  
-                  + currentdate.getMinutes() + ":" 
-                  + currentdate.getSeconds() + ":"
-                  + currentdate.getMilliseconds();
-            console.log(event);            
-          }).begin();
-          
-          } catch (error) {
-          console.error('Error initializing WebGazer:', error);
-        }
-      }
-    }
-    initializeWebGazer();
-    return () => {
-      initializeWebGazer();
-    };
-  }, []);
-  
-
   return (
-    <div className="scatterplot">
+    <div className="scatterplot" ref={scatterplotRef}>
       <div className='tutorial_part'>
-        <p>Hover on a point to get details. Try it now to practice.</p>
-        <p>Change the axes with the drop-down menu. Try changing the x-axis now to ATTRIBUTE.</p>
-        <p>Click on the BREED buttons on the top, then label one of the points in the scatterplot by clicking on it. Try it now.</p>
-        <p>If you change your mind, select the RESET button, then click on the point. Try it now.</p>
-        <p>If you need help at any point, click on the HELP button. Try it now.</p>
-        <p>Before you proceed to the first task, go ahead and label all of the points. Click Continue when you are done.</p>
+        {!hovered && (
+          <div>
+            <p>Hover on a point to get details. <br/><br/></p>
+          </div>
+        )}
+        {hovered && !axisChanged && (
+          <div>
+            <p>Change the axes with the drop-down menu. <br/><br/>Try changing the <u>x-axis</u> now to any other value.<br/><br/></p>
+          </div>
+        )}
+        {axisChanged && !pointLabeled && (
+          <div>
+            <p>Click on the <u>BREED buttons</u> (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then <u>label</u> one of the points in the scatterplot by clicking on it. <br/><br/></p>
+          </div>
+        )}
+        {pointLabeled && !pointReset && (
+          <div>
+            <p>If you change your mind, select the RESET button, then click on the point. <br/><br/></p>
+          </div>
+        )}
+        {pointReset && !helpVisible && (
+          <div>
+            <p>If you need help at any point, hover on the HELP button. <br/><br/></p>
+          </div>
+        )}
+        {helpVisible && !allLabeled && (
+          <div>
+            <p>Before you proceed to the first task, go ahead and <u>label all of the points</u>. <br/><br/>Click <u>Continue</u> when you are done.</p>
+          </div>
+        )}
       </div>
-      <div class="hover-container">
-        <div class="hover-trigger">
+      <div className="hover-container">
+        <div className="hover-trigger" onMouseEnter={toggleHelp}>
           Help
         </div>
-        <div class="info-bar">
+        <div className="info-bar">
           <p>Here's the help text</p>
         </div>
       </div>
       <div className='x-axis'>
-        <Dropdown
+      <Dropdown
           placeholder={xColumn}
           selection
           options={columns
@@ -111,7 +136,10 @@ function ScatterPlot() {
               text: column,
               value: column
             }))}
-          onChange={(e, { value }) => setXColumn(value)}
+          onChange={(e, { value }) => {
+            setXColumn(value);
+            handleAxisChange();
+          }}
         />
       </div>
       <div className='y-axis'>
@@ -131,49 +159,59 @@ function ScatterPlot() {
 
       <div className='buttons'>
       <button 
-            onClick={() => {setSelectedCategory('Bernedoodle'); setActiveButton('Bernedoodle');}} 
-            className={`ui button Bernedoodle_button ${activeButton === 'Bernedoodle' ? 'active' : ''}`}
-            style={activeButton === 'Bernedoodle' ? {borderColor: 'black'} : {}}
-          >
-            Bernedoodle
-          </button>
-          <button 
-            onClick={() => {setSelectedCategory('ShihTzu'); setActiveButton('ShihTzu');}} 
-            className={`ui button ShihTzu_button ${activeButton === 'ShihTzu' ? 'active' : ''}`}
-            style={activeButton === 'ShihTzu' ? {borderColor: 'black'} : {}}
-          >
-            ShihTzu
-          </button>
-          <button 
-            onClick={() => {setSelectedCategory('AmericanBulldog'); setActiveButton('AmericanBulldog');}} 
-            className={`ui button AmericanBulldog_button ${activeButton === 'AmericanBulldog' ? 'active' : ''}`}
-            style={activeButton === 'AmericanBulldog' ? {borderColor: 'black'} : {}}
-          >
-            AmericanBulldog
-          </button>
-          <button 
-            onClick={() => {setSelectedCategory('Null'); setActiveButton('Null');}} 
-            className={`ui button ${activeButton === 'Null' ? 'active' : ''}`}
-            style={activeButton === 'Null' ? {borderColor: 'black'} : {}}
-          >
-            Reset
-          </button>
+          onClick={(e) => {
+            setSelectedCategory('Bernedoodle');
+            setActiveButton('Bernedoodle');
+            handleLabelClick(e);
+          }} 
+          className={`ui button Bernedoodle_button ${activeButton === 'Bernedoodle' ? 'active' : ''}`}
+          style={activeButton === 'Bernedoodle' ? {borderColor: 'black'} : {}}
+        >
+          Bernedoodle
+        </button>
+
+        <button 
+          onClick={(e) => {
+            setSelectedCategory('ShihTzu');
+            setActiveButton('ShihTzu');
+            handleLabelClick(e);
+          }} 
+          className={`ui button ShihTzu_button ${activeButton === 'ShihTzu' ? 'active' : ''}`}
+          style={activeButton === 'ShihTzu' ? {borderColor: 'black'} : {}}
+        >
+          ShihTzu
+        </button>
+
+        <button 
+          onClick={(e) => {
+            setSelectedCategory('AmericanBulldog');
+            setActiveButton('AmericanBulldog');
+            handleLabelClick(e);
+          }} 
+          className={`ui button AmericanBulldog_button ${activeButton === 'AmericanBulldog' ? 'active' : ''}`}
+          style={activeButton === 'AmericanBulldog' ? {borderColor: 'black'} : {}}
+        >
+          AmericanBulldog
+        </button>
+        <button 
+          onClick={() => {setSelectedCategory('Null'); setActiveButton('Null'); handleResetClick();}} 
+          className={`ui button ${activeButton === 'Null' ? 'active' : ''}`}
+          style={activeButton === 'Null' ? {borderColor: 'black'} : {}}
+        >
+          Reset
+        </button>
       </div>
 
       <div className='scatterplot_plot'>
-      <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform} />
-
+        <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform} hovered={hovered} setHovered={setHovered} />
       </div>
 
       <div className='continue_next'>
-      <button onClick={handleContinueClick} className="ui primary button">
+        <button onClick={handleContinueClick} className="ui primary button">
           Continue
         </button>
+      </div>
     </div>
-
-    </div>
-
-    
   );
 }
 

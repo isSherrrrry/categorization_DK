@@ -55,7 +55,8 @@
   background-color: #E74646 !important;
 }
 .scatterplot_plot{
-  margin-left: 200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .buttons{
   padding-top: 30px;
@@ -108,7 +109,7 @@ button .active {
   width:500px;
   height: 200px;
   padding: 30px;
-  background-color: rgba(230,230,230,0.8);
+  background-color: rgba(255, 58, 58, 0.8);
   top: 0px;
   left: 400px;
 }
@@ -117,4 +118,12 @@ button .active {
   font-size: 20px;
   padding-bottom: 100px;
   text-align: center;
+}
+.tutorial_part{
+  position: fixed;
+  width: 20vw;
+  font-weight: bold;
+  background-color: rgba(172, 8, 8, 0.5);
+  padding: 30px;
+  right: 0;
 }
