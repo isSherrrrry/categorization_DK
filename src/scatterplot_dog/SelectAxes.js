@@ -47,6 +47,12 @@ function SelectAxes() {
 
   return (
     <div className="select_axes">
+      <div className='instruction'>
+        <p>Welcome to the <b>tutorial section</b>. <br/><br/>
+        You are now at a practice task for classifying dogs. <br/><br/>
+        Please follow the <b>instructions on the left</b> on next page. <br/><br/>
+        Now, please select the x-axis and y-axis to begin the task. </p>
+      </div>
       <div>
         <h4>Please Select X Axis</h4>
         <Dropdown

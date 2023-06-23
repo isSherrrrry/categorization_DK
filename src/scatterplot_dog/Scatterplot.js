@@ -21,8 +21,6 @@ function ScatterPlot() {
   const webgazer = window.webgazer;
   const [activeButton, setActiveButton] = useState(null);
 
-  
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,6 +84,14 @@ function ScatterPlot() {
 
   return (
     <div className="scatterplot">
+      <div className='tutorial_part'>
+        <p>Hover on a point to get details. Try it now to practice.</p>
+        <p>Change the axes with the drop-down menu. Try changing the x-axis now to ATTRIBUTE.</p>
+        <p>Click on the BREED buttons on the top, then label one of the points in the scatterplot by clicking on it. Try it now.</p>
+        <p>If you change your mind, select the RESET button, then click on the point. Try it now.</p>
+        <p>If you need help at any point, click on the HELP button. Try it now.</p>
+        <p>Before you proceed to the first task, go ahead and label all of the points. Click Continue when you are done.</p>
+      </div>
       <div class="hover-container">
         <div class="hover-trigger">
           Help

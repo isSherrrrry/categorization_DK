@@ -86,12 +86,13 @@ function ScatterPlot() {
 
   return (
     <div className="scatterplot">
+      
       <div class="hover-container">
         <div class="hover-trigger">
           Help
         </div>
         <div class="info-bar">
-          <p>Using the information provided about the customers when hovering over the points, color each circle in the scatterplot by which level of credit you think it is. By clicking the colored label on the top, you may start to color the point with the corresponding label. If you wanted to change your previous labels, directly click the circle in the scatterplot after clicking the new color label on the top.</p>
+          <p>Using the information provided about the <b>customers</b> when <b>hovering over the points</b>, <b>color each circle</b> in the scatterplot by which level of credit you think it is. By clicking the colored label on the top, you may start to color the point with the corresponding label. If you wanted to change your previous labels, directly click the circle in the scatterplot after clicking the new color label on the top.</p>
         </div>
       </div>
       <div className='x-axis'>

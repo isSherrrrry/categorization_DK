@@ -31,6 +31,10 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     const width = parseInt(svg.attr("width"));
     const height = parseInt(svg.attr("height"));
 
+    const xJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
+    const yJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
+
+
     const xScale = d3.scaleLinear()
       .domain(d3.extent(data, d => d[xColumn]))
       .range([40, width - 20]);
@@ -77,8 +81,9 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     
         // Update the position and size of the points
         svg.selectAll(".point")
-          .attr("cx", d => newXScale(d[xColumn]))
-          .attr("cy", d => newYScale(d[yColumn]));
+          .attr("cx", d => newXScale(d[xColumn]) + xJitter(Math.random()))
+          .attr("cy", d => newYScale(d[yColumn]) + yJitter(Math.random()));
+      
         
           setZoomTransform(event.transform);
       });
@@ -159,8 +164,8 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       .append("circle")
       .attr("class", "point")
       .attr("r", 7)
-      .attr("cx", d => xScale(d[xColumn]))
-      .attr("cy", d => yScale(d[yColumn]))
+      .attr("cx", d => xScale(d[xColumn]) + xJitter(Math.random()))
+      .attr("cy", d => yScale(d[yColumn]) + yJitter(Math.random()))
       .attr('data-category', null)
       .style("fill", d => getCategoryColor(d.category))
       .style("stroke", "black")
