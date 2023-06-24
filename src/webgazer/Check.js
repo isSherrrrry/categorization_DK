@@ -1,11 +1,12 @@
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Checkbox, Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import './check.css'
 
 function ScatterPlot() {
+    // const videoRef = useRef(null);
     const navigate = useNavigate();
     const webgazer = window.webgazer;
     const [isChecked, setIsChecked] = useState(false);
@@ -42,12 +43,13 @@ function ScatterPlot() {
 
     return (
         <div className="check_webgazer">
-            <h2 style={{ textAlign: "center" }}>Webcam Eye Tracker Check</h2>
-            <p>Wait for seconds until there is a video viewer shown in the upper left. Please adjust your position and maintain the border of the inner box to be <b style={{ color: "green" }}>green.</b></p>
-            <Checkbox label="The border of the box is green AND I will remain this position for the rest of the study." onChange={() => setIsChecked(!isChecked)} /><br /><br />
+            <div className="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/hQnXiPtMh3I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <Checkbox label="The border of the box is green AND I will try to maintain this position for the rest of the study." onChange={() => setIsChecked(!isChecked)} /><br /><br />
             <Button primary onClick={handleContinueClick} disabled={!isChecked}>
                 Continue
             </Button>
+            </div>
         </div>
     );
 }
