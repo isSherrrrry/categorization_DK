@@ -40,7 +40,6 @@ const handleXAxisSelection = (e, { value }) => {
   setXColumn(value);
 }
 
-// When y axis selection is made
 const handleYAxisSelection = (e, { value }) => {
   const jitteredData = jitterData(data, xColumn, value, 1);
   setData(jitteredData);

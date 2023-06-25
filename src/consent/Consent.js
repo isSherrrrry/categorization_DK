@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import './consent.css'
+import logo from './EmoryLogo.png';
 
 
 
@@ -27,16 +28,30 @@ const ConsentForm = () => {
 
   return (
     <div className="consent_main">
-      <h2>CONSENT DOCUMENT FOR ENROLLING ADULT PARTICIPANTS IN A RESEARCH STUDY</h2>
-      <h3>Project Title: Exploring Decision Making Behavior</h3>
-      <p><b>Principle Investigator: Dr. Emily Wall</b></p>
-      <p><b>Funding Source: Emory Computer Science Department</b></p>
+      <p style={{textAlign: 'center', marginBottom: '25px'}}>
+        <img src={logo} height='80' alt='Emory Logo' />
+      </p>
+      <h1 style={{textAlign: 'center'}}> Exploring Decision Making Behavior</h1>
+      {/* <h2>CONSENT DOCUMENT FOR ENROLLING ADULT PARTICIPANTS IN A RESEARCH STUDY</h2>  */}
+     
       <p>
-        <b>Protocol and Consent Title: Decision Making with Interactive
-        Visualizations</b>
+        We are researchers interested in exploring decision making behavior with interactive visualizations. In this study, you will be asked to
+        categorize data points from a scatterplot plotting interface. Detailed information regarding this study include:
+        <ul>
+          <li>In this study, you are expected to complete: (1) a presurvey; (2) two categorization tasks in the domain of car type and credit level; (3) an exit survey.</li>
+          <li>Your interactions with the interface, including clicks, hovers, and eye tracking data, will be recorded and automatically downloaded as json type files to your machine after you complete the task. </li>
+          <li>This experiment will take approximately 15-25 minutes, and you will be compensated via Prolific.</li>
+          <li style={{color: 'red', fontWeight: 'bold'}}>Please use Chrome or Firefox browser on a laptop to complete this study and allow the system access to your webcam for the eye tracking data to be collected (no video is retained).</li>
+          <li>You may only participate in this entire study once. You would have to be 18 or older as well as fluent in English to participate. If you have seen this survey before or one like it, please return the study.</li>
+        </ul>
+
       </p>
       <p class="consent_content">
-  <u><b>Introduction</b></u><br/>
+      <h2>Consent Form</h2>
+  {/* <u><b>Introduction</b></u><br/> */}
+  <p><b>Principle Investigator: Dr. Emily Wall</b></p>
+  <p><b>Protocol and Consent Title: Decision Making with InteractiveVisualizations</b></p>
+  {/* <p><b>Funding Source: Emory Computer Science Department</b></p> */}
   You are being asked to be in a research study. This form is designed to tell you everything you need to think about before you decide to consent (agree) to be in the study or not to be in the study.  It is entirely your choice.  If you decide to take part, you can change your mind later on and withdraw from the research study.  You can skip any questions that you do not wish to answer.<br/><br/>
 
   Before making your decision:<br/>
@@ -50,14 +65,11 @@ const ConsentForm = () => {
   The purpose of this study is to observe decisions that subjects make using data presented in a visualization interface.<br/><br/>
 
   <u><b>Procedures</b></u><br/>
-  Before you begin the main part of the study: You will need to have the following screening tests / procedures to find out if you can be in the main part of the study. Complete a brief survey to verify you are eligible to participate (over 18 years old, and self-report relevant domain expertise and prior experience with visualization.
-  This screening questionnaire will collect your email address. If you are eligible to participate, this information will be used to contact you to schedule a time for your participation in the study. If you are ineligible to participate, your data will be deleted.<br/>
-  During the main part of the study: You will complete the following procedure. <br/>
-  <ul>
-    <li>You will first be asked to complete a decision making task by using a data visualization tool.</li>
-    <li>Some of the participants will be invited for a second follow-up survey.</li>
-  </ul>
-  Each study session will last between 5-30 minutes (Prolific) to 1 hour (in-lab). We will invite some of the participants for a second follow-up survey that will last approximately the same amount of time.<br/><br/>
+  In the study, you will categorize data points in two tasks about car types and credit score based on the given attributes from a scatterplot plotting. To begin the study, you need to fill in a presurvey and then 
+  proceed to the categorization tasks. After completing the two tasks, you are expected to complete an exit survey about your performance.<br/><br/>
+  Your interactions with the system, including clicks, hovers, and eyetracking data, will be recorded and automatically downloaded to your machine after you complete the task. 
+  Please allow the files to download and upload them in our exit survey by instruction. Please allow the system access to your webcam for the eyetracking data to be collected (no video is retained). 
+  This experiment will last between 15-25 minutes.<br/><br/>
 
   <u><b>Risks and Discomforts</b></u><br/>
   We do not anticipate any problems that would affect risk level, participants’ willingness to participate, or feasibility of doing the research. The risks involved are no greater than those involved in daily activities such as using a laptop for web browsing.<br/><br/>
@@ -69,7 +81,7 @@ const ConsentForm = () => {
   This study is not designed to benefit you directly. This study is designed to learn more about observing decisions that subjects make using data presented in a visualization interface. The study results may be used to help others in the future.<br/><br/>
 
   <u><b>Compensation</b></u><br/>
-  You will be compensated at a rate of $10 per hour for each completed study session.  If you do not finish the study, you will be paid for the sessions you have completed. <br/><br/>
+  You will be compensated at a rate of $10 per hour for the completed study.  If you decide to withdraw from the study prior to completion you will not be eligible for payment. <br/><br/>
 
   <u><b>Confidentiality</b></u><br/>
   Certain offices and people other than the researchers may look at study records. Government agencies and Emory employees overseeing proper study conduct may look at your study records.  These offices include the funder(s), the Emory Institutional Review Board, the Emory Office of Compliance. Study funders may also look at your study records.   Emory will keep any research records we create private to the extent we are required to do so by law.  A study number rather than your name will be used on study records wherever possible. Your name and other facts that might point to you will not appear when we present this study or publish its results. <br/>
@@ -77,12 +89,12 @@ const ConsentForm = () => {
 
   <u><b>Storing and Sharing your Information</b></u><br/>
   De-identified data from this study (data that has been stripped of all information that can identify you), may be placed into public databases where, in addition to having no direct identifiers, researchers will need to sign data use agreements before accessing the data. We will remove or code any personal information that could identify you before your information is shared. This will ensure that, by current scientific standards and known methods, it is extremely unlikely that anyone would be able to identify you from the information we share. Despite these measures, we cannot guarantee anonymity of your personal data.<br/>
-  Your data from this study may be useful for other research being done by investigators at Emory or elsewhere. To help further science, we may provide your deidentified data and/or specimens to other researchers. If we do, we will not include any information that could identify you. If your data or specimens are labeled with your study ID, we will not allow the other investigators to link that ID to your identifiable information.<br/>
-  No results returned to participants<br/>
+  Your data from this study may be useful for other research being done by investigators at Emory or elsewhere. To help further science, we may provide your deidentified data and/or specimens to other researchers. If we do, we will not include any information that could identify you. If your data or specimens are labeled with your study ID, we will not allow the other investigators to link that ID to your identifiable information.
+  No results returned to participants.<br/>
   In general, we will not give you any individual results from the study of the samples you give us.<br/><br/>
 
   <u><b>Withdrawal from the Study</b></u><br/>
-  You have the right to leave a study at any time without penalty.  <br/>
+  You have the right to leave a study at any time without penalty. 
   The researchers also have the right to stop your participation in this study without your consent for any reason, especially if they believe it is in your best interest or if you were to object to any future changes that may be made in the study plan.  <br/><br/>
 
   <u><b>Contact Information</b></u><br/>

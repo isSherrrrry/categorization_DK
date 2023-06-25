@@ -21,11 +21,13 @@
   position: absolute;
   bottom: 30px;
   left:600px;
+
 }
 .y-axis{
   position: absolute;
   left: 20px;
   top: 50%;
+
 }
 
 .select_axes{
