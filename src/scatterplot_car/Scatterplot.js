@@ -22,7 +22,30 @@ function ScatterPlot() {
   const [activeButton, setActiveButton] = useState(null);
 
   
+  function addJitter(value, amount) {
+    return value + (Math.random() - 0.5) * amount;
+}
 
+function jitterData(data, xProp, yProp, amount) {
+  return data.map(d => ({
+      ...d, 
+      [xProp]: addJitter(d[xProp], amount),
+      [yProp]: addJitter(d[yProp], amount)
+  }));
+}
+
+const handleXAxisSelection = (e, { value }) => {
+  const jitteredData = jitterData(data, value, yColumn, 1);
+  setData(jitteredData);
+  setXColumn(value);
+}
+
+// When y axis selection is made
+const handleYAxisSelection = (e, { value }) => {
+  const jitteredData = jitterData(data, xColumn, value, 1);
+  setData(jitteredData);
+  setYColumn(value);
+}
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +55,7 @@ function ScatterPlot() {
         header: true,
         dynamicTyping: true,
       });
+
       setData(parsedData.data);
       setData(parsedData.data.map(d => ({ ...d, category: null })));
       setColumns(parsedData.meta.fields);
@@ -99,13 +123,14 @@ function ScatterPlot() {
           placeholder={xColumn}
           selection
           options={columns
-            .filter(column => !['Customer ID', 'Name', 'Credit Score', 'creditID'].includes(column))
+            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID', 'CarType'].includes(column))
             .map(column => ({
               key: `x-${column}`,
               text: column,
               value: column
             }))}
-          onChange={(e, { value }) => setXColumn(value)}
+          // onChange={(e, { value }) => setXColumn(value)}
+          onChange={handleXAxisSelection}
         />
       </div>
       <div className='y-axis'>
@@ -113,13 +138,14 @@ function ScatterPlot() {
           placeholder={yColumn}
           selection
           options={columns
-            .filter(column => !['Customer ID', 'Name', 'Credit Score', 'creditID'].includes(column))
+            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID', 'CarType'].includes(column))
             .map(column => ({
               key: `y-${column}`,
               text: column,
               value: column
             }))}
-          onChange={(e, { value }) => setYColumn(value)}
+          // onChange={(e, { value }) => setYColumn(value)}
+          onChange={handleYAxisSelection}
         />
       </div>
 

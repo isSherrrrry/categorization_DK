@@ -100,7 +100,7 @@ function ScatterPlot() {
           placeholder={xColumn}
           selection
           options={columns
-            .filter(column => !['Customer ID', 'Name', 'Credit Score', 'creditID'].includes(column))
+            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID'].includes(column))
             .map(column => ({
               key: `x-${column}`,
               text: column,
@@ -114,7 +114,7 @@ function ScatterPlot() {
           placeholder={yColumn}
           selection
           options={columns
-            .filter(column => !['Customer ID', 'Name', 'Credit Score', 'creditID'].includes(column))
+            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID'].includes(column))
             .map(column => ({
               key: `y-${column}`,
               text: column,

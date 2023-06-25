@@ -6,7 +6,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './check.css'
 
 function ScatterPlot() {
-    // const videoRef = useRef(null);
+
     const navigate = useNavigate();
     const webgazer = window.webgazer;
     const [isChecked, setIsChecked] = useState(false);
