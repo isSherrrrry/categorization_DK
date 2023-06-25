@@ -29,7 +29,8 @@ function ScatterPlot() {
   const [allLabeled, setAllLabeled] = useState(false);
 
   const toggleHelp = () => {
-    setHelpVisible(!helpVisible);
+    // setHelpVisible(!helpVisible);
+    setHelpVisible(true);
   };
 
   const handleLabelClick = (event) => {
@@ -51,6 +52,31 @@ function ScatterPlot() {
   const handleAllLabeled = (event) => {
     setAllLabeled(true);
   };
+
+
+  function addJitter(value, amount) {
+    return value + (Math.random() - 0.5) * amount;
+}
+
+function jitterData(data, xProp, yProp, amount) {
+  return data.map(d => ({
+      ...d, 
+      [xProp]: addJitter(d[xProp], amount),
+      [yProp]: addJitter(d[yProp], amount)
+  }));
+}
+
+const handleXAxisSelection = (e, { value }) => {
+  const jitteredData = jitterData(data, value, yColumn, 3);
+  setData(jitteredData);
+  setXColumn(value);
+}
+
+const handleYAxisSelection = (e, { value }) => {
+  const jitteredData = jitterData(data, xColumn, value, 3);
+  setData(jitteredData);
+  setYColumn(value);
+}
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,32 +114,32 @@ function ScatterPlot() {
       <div className='tutorial_part'>
         {!hovered && (
           <div>
-            <p>Hover on a point to get details. <br/><br/></p>
+            <p><b>Step 1/6:</b> Hover on a point to get details regarding it. <br/><br/></p>
           </div>
         )}
         {hovered && !axisChanged && (
           <div>
-            <p>Change the axes with the drop-down menu. <br/><br/>Try changing the <u>x-axis</u> now to any other value.<br/><br/></p>
+            <p><b>Step 2/6:</b> B-I-N-G-O! Change the axes with the drop-down menu. <br/><br/>Try changing <u>another axis</u> now to any other attribute you'd like.<br/><br/></p>
           </div>
         )}
-        {axisChanged && !pointLabeled && (
+        {axisChanged && !pointLabeled &&(
           <div>
-            <p>Click on the <u>BREED buttons</u> (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then <u>label</u> one of the points in the scatterplot by clicking on it. <br/><br/></p>
+            <p><b>Step 3/6:</b> Excellent! Click on one of the <u>BREED buttons</u> (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then <u>label</u> one of the points in the scatterplot by clicking on it. <br/><br/></p>
           </div>
         )}
         {pointLabeled && !pointReset && (
           <div>
-            <p>If you change your mind, select the RESET button, then click on the point. <br/><br/></p>
+            <p><b>Step 4/6:</b> If you change your mind, select the RESET button, then click on the point. <br/><br/></p>
           </div>
         )}
         {pointReset && !helpVisible && (
           <div>
-            <p>If you need help at any point, hover on the HELP button. <br/><br/></p>
+            <p><b>Step 5/6:</b> If you need help at any point, hover on the HELP button. <br/><br/></p>
           </div>
         )}
         {helpVisible && !allLabeled && (
           <div>
-            <p>Before you proceed to the first task, go ahead and <u>label all of the points</u>. <br/><br/>Click <u>Continue</u> when you are done.</p>
+            <p><b>Step 6/6:</b> Got it! Before you proceed to the first task, go ahead and <u>label all of the points</u>. <br/><br/>Click <u>Continue</u> when you are done.</p>
           </div>
         )}
       </div>
