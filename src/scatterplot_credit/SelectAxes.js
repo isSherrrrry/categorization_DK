@@ -40,8 +40,7 @@ function SelectAxes() {
     <div className="select_axes" style={{padding: '20px'}}>
       <div className='instruction' style={{marginBottom: '-10px'}}>
         <h2 style={{marginTop: '40px'}}>Welcome to the <b>Actual Task</b>!</h2> 
-        <p style={{lineHeight: '1.5'}}> You're about to proceed to the actual task for categorizing
-  <br /><b>Credit Score</b>.</p>
+        <p style={{lineHeight: '1.5'}}> You're about to proceed to the actual task for categorizing<br /><b>Credit Score</b>.</p>
         <p style={{lineHeight: '1.5'}}> Similar with the practice task, feel free to select the attributes of the x-axis and y-axis that you'd like to begin the task. </p>
       </div>
       <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '0px'}}> 

@@ -71,10 +71,17 @@ const handleYAxisSelection = (e, { value }) => {
     
   }, [location.state]);
 
+  console.log(localStorage.getItem('first_task'));
+
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
     if (coloredPoints.length >= 25) {
-      navigate('/postsurvey');
+      if (localStorage.getItem("first_task") == 'car'){
+        navigate('/selectaxis_credit');
+      } else {
+        navigate('/postsurvey');
+      }
+      
     } else {
       alert('Please color at least 25 points before continuing.');
     }

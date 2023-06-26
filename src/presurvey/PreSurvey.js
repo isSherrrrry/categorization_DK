@@ -42,12 +42,28 @@ const ConsentForm = () => {
 
   return (
     <div className="presurvey_main">
-      <h2>Pre-Survey</h2>
+      <h2>Pre-Survey</h2>   
       <p>Your UserID: <b>{userId}</b></p>
       <p>Please copy and paste <b>{userId}</b> into the dedicated field of the survey</p>
-      <p style={{color: 'red', fontWeight: 'bold'}}>Please be sure to scroll through to complete the entire survey before continuing</p>
-      <iframe src="https://emorycollege.co1.qualtrics.com/jfe/form/SV_eJ02rOjxcLBWakm" width="1200" height="2000" frameborder="0" marginheight="100" marginwidth="0" top="30">Loading...</iframe>
-      <div className="userCode">
+
+      <p style={{color: 'red', fontWeight: 'bold'}}>Please be sure to scroll through to complete and submit the survey before continuing. <br></br> A code will be provide to preceed with the study.</p>
+      <div className="input-container" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div className="userCode">
+          <label htmlFor="userCode">Enter the code provided after submitting the survey: </label>
+          <Input
+            type="text"
+            id="userCode"
+            value={userCode}
+            onChange={handleUserCodeChange}
+            placeholder="Enter code"
+          />
+      </div>
+      <Button onClick={handleContinue} primary className="continue_button" style={{marginLeft: '20px'}}>
+        Continue
+      </Button>
+      </div>
+      <iframe src="https://emorycollege.co1.qualtrics.com/jfe/form/SV_eJ02rOjxcLBWakm" width="1000" height="1200" frameborder="0" marginheight="100" marginwidth="0" top="30">Loading...</iframe>
+      {/* <div className="userCode">
         <label htmlFor="userCode">Enter the code provided: </label>
         <Input
           type="text"
@@ -59,7 +75,7 @@ const ConsentForm = () => {
       </div>
       <Button onClick={handleContinue} primary className="continue_button">
         Continue
-      </Button>
+      </Button> */}
     </div>
   );
 };
