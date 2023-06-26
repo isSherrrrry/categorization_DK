@@ -35,10 +35,10 @@ const ConsentForm = () => {
       {/* <h2>CONSENT DOCUMENT FOR ENROLLING ADULT PARTICIPANTS IN A RESEARCH STUDY</h2>  */}
      
       <p>
-        We are researchers interested in exploring decision making behavior with interactive visualizations. In this study, you will be asked to
+        Thank you for your interest in our study! We are researchers interested in exploring decision making behavior with interactive visualizations. In this study, you will be asked to
         categorize data points from a scatterplot plotting interface. Detailed information regarding this study include:
         <ul>
-          <li>In this study, you are expected to complete: (1) a presurvey; (2) two categorization tasks in the domain of car type and credit level; (3) an exit survey.</li>
+          <li>In this study, you are expected to complete: (1) a presurvey; (2) two categorization tasks in the domain of car type and credit score; (3) an exit survey.</li>
           <li>Your interactions with the interface, including clicks, hovers, and eye tracking data, will be recorded and automatically downloaded as json type files to your machine after you complete the task. </li>
           <li>This experiment will take approximately 15-25 minutes, and you will be compensated via Prolific.</li>
           <li style={{color: 'red', fontWeight: 'bold'}}>Please use Chrome or Firefox browser on a laptop to complete this study and allow the system access to your webcam for the eye tracking data to be collected (no video is retained).</li>
