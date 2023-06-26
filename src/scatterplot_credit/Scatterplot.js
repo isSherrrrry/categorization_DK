@@ -48,10 +48,18 @@ function ScatterPlot() {
     
   }, [location.state]);
 
+  console.log(localStorage.getItem('first_task'));
+
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
     if (coloredPoints.length >= 25) {
-      navigate('/selectaxis_car');
+      if (localStorage.getItem("first_task") == 'credit'){
+        navigate('/selectaxis_car');
+
+      } else {
+        navigate('/postsurvey');
+      }
+      
     } else {
       alert('Please color at least 25 points before continuing.');
     }

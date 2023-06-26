@@ -100,10 +100,21 @@ const handleYAxisSelection = (e, { value }) => {
     }
   }, [location.state]);
 
+  let x = Math.floor((Math.random() * 10) + 1);
+  console.log(x);
+
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
     if (coloredPoints.length >= 12) {
-      navigate('/selectaxis_credit');
+
+      if (x % 2 === 0) {
+        localStorage.setItem('first_task', 'credit');
+        navigate('/selectaxis_credit');
+      }else{
+        localStorage.setItem('first_task', 'car');
+        navigate('/selectaxis_car');
+      }
+      console.log(localStorage.getItem('first_task'));
     } else {
       alert('Please color at least 12 points before continuing.');
     }
