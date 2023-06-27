@@ -22,29 +22,29 @@ function ScatterPlot() {
   const [activeButton, setActiveButton] = useState(null);
 
   
-  function addJitter(value, amount) {
-    return value + (Math.random() - 0.5) * amount;
-}
+//   function addJitter(value, amount) {
+//     return value + (Math.random() - 0.5) * amount;
+// }
 
-function jitterData(data, xProp, yProp, amount) {
-  return data.map(d => ({
-      ...d, 
-      [xProp]: addJitter(d[xProp], amount),
-      [yProp]: addJitter(d[yProp], amount)
-  }));
-}
+// function jitterData(data, xProp, yProp, amount) {
+//   return data.map(d => ({
+//       ...d, 
+//       [xProp]: addJitter(d[xProp], amount),
+//       [yProp]: addJitter(d[yProp], amount)
+//   }));
+// }
 
-const handleXAxisSelection = (e, { value }) => {
-  const jitteredData = jitterData(data, value, yColumn, 1);
-  setData(jitteredData);
-  setXColumn(value);
-}
+// const handleXAxisSelection = (e, { value }) => {
+//   const jitteredData = jitterData(data, value, yColumn, 1);
+//   setData(jitteredData);
+//   setXColumn(value);
+// }
 
-const handleYAxisSelection = (e, { value }) => {
-  const jitteredData = jitterData(data, xColumn, value, 1);
-  setData(jitteredData);
-  setYColumn(value);
-}
+// const handleYAxisSelection = (e, { value }) => {
+//   const jitteredData = jitterData(data, xColumn, value, 1);
+//   setData(jitteredData);
+//   setYColumn(value);
+// }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -135,8 +135,8 @@ const handleYAxisSelection = (e, { value }) => {
               text: column,
               value: column
             }))}
-          // onChange={(e, { value }) => setXColumn(value)}
-          onChange={handleXAxisSelection}
+          onChange={(e, { value }) => setXColumn(value)}
+          // onChange={handleXAxisSelection}
         />
       </div>
       <div className='y-axis'>
@@ -150,8 +150,8 @@ const handleYAxisSelection = (e, { value }) => {
               text: column,
               value: column
             }))}
-          // onChange={(e, { value }) => setYColumn(value)}
-          onChange={handleYAxisSelection}
+          onChange={(e, { value }) => setYColumn(value)}
+          // onChange={handleYAxisSelection}
         />
       </div>
 

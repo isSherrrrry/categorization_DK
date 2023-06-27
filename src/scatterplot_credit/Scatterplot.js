@@ -20,10 +20,7 @@ function ScatterPlot() {
   const scatterplotRef = useRef(null);
   const webgazer = window.webgazer;
   const [activeButton, setActiveButton] = useState(null);
-
   
-
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('/credit_removed.csv');
@@ -164,7 +161,9 @@ function ScatterPlot() {
       </div>
 
       <div className='scatterplot_plot'>
-      <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform} />
+      <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform}  
+      // xJitterRef={xJitterRef} yJitterRef={yJitterRef}
+      />
 
       </div>
 

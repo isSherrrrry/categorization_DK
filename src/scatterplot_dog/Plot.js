@@ -5,6 +5,13 @@ import './plot.css';
 // import logEvent from '../Logger';
 
 const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform, hovered, setHovered}) => {
+  const seedableRandom = (seed) => {
+    var x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+  }
+
+  const jitterScale = d3.scaleLinear().domain([0.1, 30]).range([1, 30]);
+  
   const svgRef = useRef();
   const zoomRef = useRef();
 
@@ -43,6 +50,9 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     const svg = d3.select(svgRef.current);
     const width = parseInt(svg.attr("width"));
     const height = parseInt(svg.attr("height"));
+
+    const xJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
+    const yJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
 
     const xScale = d3.scaleLinear()
       .domain(d3.extent(data, d => d[xColumn]))
@@ -87,11 +97,13 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         // Update the axes
         svg.select(".x-axis").call(xAxis.scale(newXScale));
         svg.select(".y-axis").call(yAxis.scale(newYScale));
+
+        const currentJitter = jitterScale(event.transform.k);
     
         // Update the position and size of the points
         svg.selectAll(".point")
-          .attr("cx", d => newXScale(d[xColumn]))
-          .attr("cy", d => newYScale(d[yColumn]));
+          .attr("cx", (d, i) => newXScale(d[xColumn]) + currentJitter * xJitter(seedableRandom(i)))
+          .attr("cy", (d, i) => newYScale(d[yColumn]) + currentJitter * yJitter(seedableRandom(i)))
         
           setZoomTransform(event.transform);
       });
@@ -173,8 +185,8 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       .append("circle")
       .attr("class", "point")
       .attr("r", 7)
-      .attr("cx", d => xScale(d[xColumn]))
-      .attr("cy", d => yScale(d[yColumn]))
+      .attr("cx", (d,i) => xScale(d[xColumn])+ xJitter(seedableRandom(i)))
+      .attr("cy", (d,i) => yScale(d[yColumn])+ yJitter(seedableRandom(i)))
       .attr('data-category', null)
       .style("fill", d => getCategoryColor(d.category))
       .style("stroke", "black")
