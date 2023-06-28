@@ -28,29 +28,61 @@ function ScatterPlot() {
   const [pointReset, setPointReset] = useState(false);
   const [allLabeled, setAllLabeled] = useState(false);
 
+  const [pointClickedAfterReset, setPointClickedAfterReset] = useState(false);
+
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = [
+    { condition: () => !hovered, message: 'Hover on a point to get details regarding it.' },
+    { condition: () => hovered && !axisChanged, message: 'Yay! Change the axes with the drop-down menu. Try changing another axis now to any other attribute you would like.' },
+    { condition: () => axisChanged && !pointLabeled, message: 'Excellent! Click on one of the BREED buttons (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then label one of the points in the scatterplot by clicking on it.' },
+    { condition: () => pointLabeled && !pointReset, message: 'If you change your mind, select the RESET button.' },
+    { condition: () => pointReset && !pointClickedAfterReset, message: 'Then click on the point that you\'d like to reset.' },
+    { condition: () => pointClickedAfterReset && pointLabeled && !helpVisible, message: 'If you need help at any point, hover on the HELP button.' },
+    { condition: () => helpVisible && !allLabeled, message: 'You got it! Before you proceed to the first task, go ahead and label all of the points. Click \'Continue\' when you are done.' }
+  ];
+  const getCurrentStep = () => {
+    for (let i = 0; i < steps.length; i++) {
+      if (steps[i].condition()) {
+        return i;
+      }
+    }
+    return steps.length;
+  };
+
+
+
   const toggleHelp = () => {
     // setHelpVisible(!helpVisible);
     setHelpVisible(true);
+
   };
 
   const handleLabelClick = (event) => {
     setPointLabeled(true);
+
   };
 
   const handleResetClick = (event) => {
     setPointReset(true);
+
+    // setPointLabeled(false); // Reset the pointLabeled state when a point is reset
+    setPointClickedAfterReset(false);
+
   };
 
   const handleAxisChange = (event) => {
     setAxisChanged(true);
+
   };
 
   const handlePointHover = (event) => {
     setHovered(true);
+
   };
 
   const handleAllLabeled = (event) => {
     setAllLabeled(true);
+
   };
 
 
@@ -100,59 +132,89 @@ const handleYAxisSelection = (e, { value }) => {
     }
   }, [location.state]);
 
-  let x = Math.floor((Math.random() * 10) + 1);
-  console.log(x);
+  // let x = Math.floor((Math.random() * 10) + 1);
+  // console.log(x);
 
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
     if (coloredPoints.length >= 12) {
 
-      if (x % 2 === 0) {
-        localStorage.setItem('first_task', 'credit');
-        navigate('/selectaxis_credit');
-      }else{
-        localStorage.setItem('first_task', 'car');
-        navigate('/selectaxis_car');
-      }
-      console.log(localStorage.getItem('first_task'));
+      navigate('/intro_formal');
+      // if (x % 2 === 0) {
+      //   localStorage.setItem('first_task', 'credit');
+      //   navigate('/selectaxis_credit');
+      // }else{
+      //   localStorage.setItem('first_task', 'car');
+      //   navigate('/selectaxis_car');
+      // }
+      // console.log(localStorage.getItem('first_task'));
     } else {
       alert('Please color at least 12 points before continuing.');
     }
+  
   }
 
+  console.log("pointClickedAfterReset: ", pointClickedAfterReset);
+  console.log("helpVisible: ", helpVisible);
+  console.log("pointLabeled: ", pointLabeled);
+  console.log("pointReset: ", pointReset);
+
+  const step = getCurrentStep();
+
   return (
+    
     <div className="scatterplot" ref={scatterplotRef}>
       <div className='tutorial_part'>
-        {!hovered && (
+        <div>
+          <p>
+            <b>Step {step + 1}/{steps.length}:</b> {steps[step].message}
+          </p>
+        </div>
+
+      
+
+
+        {/* {!hovered && (
           <div>
-            <p><b>Step 1/6:</b> Hover on a point to get details regarding it. <br/><br/></p>
+            <p><b>Step 1/7:</b> Hover on a point to get details regarding it. <br/><br/></p>
           </div>
         )}
         {hovered && !axisChanged && (
           <div>
-            <p><b>Step 2/6:</b> B-I-N-G-O! Change the axes with the drop-down menu. <br/><br/>Try changing <u>another axis</u> now to any other attribute you'd like.<br/><br/></p>
+            <p><b>Step 2/7:</b> B-I-N-G-O! Change the axes with the drop-down menu. <br/><br/>Try changing <u>another axis</u> now to any other attribute you'd like.<br/><br/></p>
           </div>
         )}
-        {axisChanged && !pointLabeled &&(
+        {axisChanged && !pointLabeled &&( 
           <div>
-            <p><b>Step 3/6:</b> Excellent! Click on one of the <u>BREED buttons</u> (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then <u>label</u> one of the points in the scatterplot by clicking on it. <br/><br/></p>
+            <p><b>Step 3/7:</b> Excellent! Click on one of the <u>BREED buttons</u> (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then <u>label</u> one of the points in the scatterplot by clicking on it. <br/><br/></p>
           </div>
         )}
+
         {pointLabeled && !pointReset && (
+        
           <div>
-            <p><b>Step 4/6:</b> If you change your mind, select the RESET button, then click on the point. <br/><br/></p>
+            <p><b>Step 4/7:</b> If you change your mind, select the RESET button. <br/><br/></p>
           </div>
         )}
-        {pointReset && !helpVisible && (
+
+        {pointReset && !pointClickedAfterReset && (
           <div>
-            <p><b>Step 5/6:</b> If you need help at any point, hover on the HELP button. <br/><br/></p>
+            <p><b>Step 5/7:</b> Then click on the point. <br/><br/></p>
+          </div>
+        )}
+
+        
+        {pointClickedAfterReset && !helpVisible && pointLabeled && (
+          <div>
+            <p><b>Step 6/7:</b> If you need help at any point, hover on the HELP button. <br/><br/></p>
           </div>
         )}
         {helpVisible && !allLabeled && (
           <div>
-            <p><b>Step 6/6:</b> Got it! Before you proceed to the first task, go ahead and <u>label all of the points</u>. <br/><br/>Click <u>Continue</u> when you are done.</p>
+            <p><b>Step 7/7:</b> Got it! Before you proceed to the first task, go ahead and <u>label all of the points</u>. <br/><br/>Click <u>Continue</u> when you are done.</p>
           </div>
-        )}
+        )} */}
+      
       </div>
       <div className="hover-container">
         <div className="hover-trigger" onMouseEnter={toggleHelp}>
@@ -195,11 +257,12 @@ const handleYAxisSelection = (e, { value }) => {
       </div>
 
       <div className='buttons'>
+
       <button 
           onClick={(e) => {
             setSelectedCategory('Bernedoodle');
             setActiveButton('Bernedoodle');
-            handleLabelClick(e);
+            // handleLabelClick(e);
           }} 
           className={`ui button Bernedoodle_button ${activeButton === 'Bernedoodle' ? 'active' : ''}`}
           style={activeButton === 'Bernedoodle' ? {borderColor: 'black'} : {}}
@@ -211,7 +274,7 @@ const handleYAxisSelection = (e, { value }) => {
           onClick={(e) => {
             setSelectedCategory('ShihTzu');
             setActiveButton('ShihTzu');
-            handleLabelClick(e);
+            // handleLabelClick(e);
           }} 
           className={`ui button ShihTzu_button ${activeButton === 'ShihTzu' ? 'active' : ''}`}
           style={activeButton === 'ShihTzu' ? {borderColor: 'black'} : {}}
@@ -223,7 +286,7 @@ const handleYAxisSelection = (e, { value }) => {
           onClick={(e) => {
             setSelectedCategory('AmericanBulldog');
             setActiveButton('AmericanBulldog');
-            handleLabelClick(e);
+            // handleLabelClick(e);
           }} 
           className={`ui button AmericanBulldog_button ${activeButton === 'AmericanBulldog' ? 'active' : ''}`}
           style={activeButton === 'AmericanBulldog' ? {borderColor: 'black'} : {}}
@@ -240,7 +303,10 @@ const handleYAxisSelection = (e, { value }) => {
       </div>
 
       <div className='scatterplot_plot'>
-        <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform} hovered={hovered} setHovered={setHovered} />
+        <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} 
+        setPointLabeled={setPointLabeled}
+        setPointClickedAfterReset={setPointClickedAfterReset}
+        setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform} hovered={hovered} setHovered={setHovered} />
       </div>
 
       <div className='continue_next'>

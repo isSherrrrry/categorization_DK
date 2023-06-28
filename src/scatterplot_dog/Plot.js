@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import './plot.css';
 // import logEvent from '../Logger';
 
-const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform, hovered, setHovered}) => {
+const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform, hovered, setHovered, setPointLabeled, setPointClickedAfterReset}) => {
   const seedableRandom = (seed) => {
     var x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
@@ -161,7 +161,12 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       const circle = d3.select(event.target);
       const index = data.findIndex(el => el === d);
       const newData = [...data];
-      const newCategory = data[index].category === selectedCategory ? null : selectedCategory;
+      // const newCategory = data[index].category === selectedCategory ? null : selectedCategory;
+      const newCategory = selectedCategory;
+
+
+      setPointLabeled(true);
+      setPointClickedAfterReset(true);
     
       newData[index] = { ...data[index], category: newCategory };
     
@@ -221,8 +226,3 @@ return (
 };
 
 export default Plot;
-
-
-
-
-
