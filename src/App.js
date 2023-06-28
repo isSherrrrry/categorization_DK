@@ -9,6 +9,8 @@ import Check from './webgazer/Check';
 import PostSurvey from './presurvey/PostSurvey'
 import Scatterplot_dog from './scatterplot_dog/Scatterplot';
 import SelectAxes_dog from './scatterplot_dog/SelectAxes';
+import IntroPractice from './scatterplot_dog/IntroPractice';
+import IntroFormal from './scatterplot_dog/IntroFormal';
 import Scatterplot_car from './scatterplot_car/Scatterplot';
 import SelectAxes_car from './scatterplot_car/SelectAxes';
 import ThankYou from './presurvey/ThankYou'
@@ -30,7 +32,8 @@ function App() {
         <Route path="/selectaxis_car" element={<SelectAxes_car/>} />
         <Route path="/scatterplot_car" element={<Scatterplot_car/>} />
         <Route path="/thankyou" element={<ThankYou/>} />
-        {/* <Route path="/tutorial" element={<TutorialPage/>} /> */}
+        <Route path="/intro_pactice" element={<IntroPractice/>} />
+        <Route path="/intro_formal" element={<IntroFormal/>} />
 
       </Routes>
    </Router>

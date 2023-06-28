@@ -153,7 +153,8 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       const circle = d3.select(event.target);
       const index = data.findIndex(el => el === d);
       const newData = [...data];
-      const newCategory = data[index].category === selectedCategory ? null : selectedCategory;
+      // const newCategory = data[index].category === selectedCategory ? null : selectedCategory;
+      const newCategory = selectedCategory;
       
       newData[index] = { ...data[index], category: newCategory };
     

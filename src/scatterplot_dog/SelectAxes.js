@@ -45,50 +45,6 @@ function SelectAxes() {
     }
   };
 
-  // return (
-  //   <div className="select_axes">
-  //     <div className='instruction'>
-  //       <h2 style={{marginTop: '40px'}}>Welcome to the <b>Practice Task</b>!</h2> 
-  //       <p> You are now at a practice task for classifying DOGs.</p> 
-  //       <p>On next page, we will guide you step-by-step to get familiar with our interface. <br/><br/>
-  //       Now, feel free to select the attributes of the x-axis and y-axis that you would like to begin the task. </p>
-  //     </div>
-  //     <div style={{display: 'flex', justifyContent: 'space-between'}}> 
-  //       <div style={{marginRight: '40px'}}>
-  //         <h4>Please Select X Axis:</h4>
-  //         <Dropdown
-  //           placeholder="--Select column--"
-  //           selection
-  //           options={columns
-  //             .filter(column => !['Customer ID', 'Name', 'Credit Score', 'creditID', 'name'].includes(column))
-  //             .map(column => ({
-  //               key: `x-${column}`,
-  //               text: column,
-  //               value: column
-  //             }))}
-  //           onChange={(e, { value }) => setXColumn(value)}
-  //         />
-  //       </div>
-  //       <div>
-  //         <h4>Please Select Y Axis:</h4>
-  //         <Dropdown
-  //           placeholder="--Select column--"
-  //           selection
-  //           options={columns
-  //             .filter(column => !['Customer ID', 'Name', 'Credit Score', 'creditID', 'name'].includes(column))
-  //             .map(column => ({
-  //               key: `y-${column}`,
-  //               text: column,
-  //               value: column
-  //             }))}
-  //           onChange={(e, { value }) => setYColumn(value)}
-  //         />
-  //       </div>
-  //     </div>
-  //     <button onClick={handleSubmit} class="ui blue button">Go to ScatterPlot</button>
-  //   </div>
-  // );
-
   return (
     <div className="select_axes" style={{padding: '20px'}}>
       <div className='instruction' style={{marginBottom: '-10px'}}>
