@@ -10,7 +10,7 @@
 .video-container {
     /* position: flex;  */
     position: absolute; 
-    top: 20px;
+    top: 10px;
     right: 20px;
     width: 910px;
     height: 480px;

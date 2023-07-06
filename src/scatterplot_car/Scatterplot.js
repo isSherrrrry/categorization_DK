@@ -79,7 +79,7 @@ function ScatterPlot() {
       if (localStorage.getItem("first_task") == 'car'){
         navigate('/selectaxis_credit');
       } else {
-        navigate('/postsurvey');
+        navigate('/stop_tracking');   
       }
       
     } else {
@@ -121,7 +121,18 @@ function ScatterPlot() {
           Help
         </div>
         <div class="info-bar">
-          <p>Using the information provided about the cars when hovering over the points, color each circle in the scatterplot by which type of car you think it is. By clicking the colored label on the top, you may start to color the point with the corresponding label. If you wanted to change your previous labels, directly click the circle in the scatterplot after clicking the new color label on the top.</p>
+          <p>Your task is to <b>categorize all points in the scatterplot</b>.
+            <ul>
+              <li><b>Hover</b> over a point to see details</li>
+              <li><b>Click</b> the colored label on the top corresponding the label you would like to apply</li>
+              <li><b>Click</b> the point(s) in the scatterplot to label with the selected label</li>
+              <li><b>Click</b> <i>Reset</i> then click the respective point in the scatterplot if you wanted to change your previous label</li>
+            </ul>
+          </p>
+
+
+ 
+
         </div>
       </div>
       <div className='x-axis'>
@@ -156,34 +167,35 @@ function ScatterPlot() {
       </div>
 
       <div className='buttons'>
-      <button 
-            onClick={() => {setSelectedCategory('Sedan'); setActiveButton('Sedan');}} 
-            className={`ui button Sedan_button ${activeButton === 'Sedan' ? 'active' : ''}`}
-            style={activeButton === 'Sedan' ? {borderColor: 'black'} : {}}
-          >
-            Sedan
-          </button>
-          <button 
-            onClick={() => {setSelectedCategory('SUV'); setActiveButton('SUV');}} 
-            className={`ui button SUV_button ${activeButton === 'SUV' ? 'active' : ''}`}
-            style={activeButton === 'SUV' ? {borderColor: 'black'} : {}}
-          >
-            SUV
-          </button>
-          <button 
-            onClick={() => {setSelectedCategory('Minivan'); setActiveButton('Minivan');}} 
-            className={`ui button Minivan_button ${activeButton === 'Minivan' ? 'active' : ''}`}
-            style={activeButton === 'Minivan' ? {borderColor: 'black'} : {}}
-          >
-            Minivan
-          </button>
-          <button 
-            onClick={() => {setSelectedCategory('Null'); setActiveButton('Null');}} 
-            className={`ui button ${activeButton === 'Null' ? 'active' : ''}`}
-            style={activeButton === 'Null' ? {borderColor: 'black'} : {}}
-          >
-            Reset
-          </button>
+        
+        <button 
+          onClick={() => {setSelectedCategory('SUV'); setActiveButton('SUV');}} 
+          className={`ui button SUV_button ${activeButton === 'SUV' ? 'active' : ''}`}
+          style={activeButton === 'SUV' ? {borderColor: 'black'} : {}}
+        >
+          SUV
+        </button>
+        <button 
+          onClick={() => {setSelectedCategory('Minivan'); setActiveButton('Minivan');}} 
+          className={`ui button Minivan_button ${activeButton === 'Minivan' ? 'active' : ''}`}
+          style={activeButton === 'Minivan' ? {borderColor: 'black'} : {}}
+        >
+          Minivan
+        </button>
+        <button 
+          onClick={() => {setSelectedCategory('Sedan'); setActiveButton('Sedan');}} 
+          className={`ui button Sedan_button ${activeButton === 'Sedan' ? 'active' : ''}`}
+          style={activeButton === 'Sedan' ? {borderColor: 'black'} : {}}
+        >
+          Sedan
+        </button>
+        <button 
+          onClick={() => {setSelectedCategory('Null'); setActiveButton('Null');}} 
+          className={`ui button reset_button ${activeButton === 'Null' ? 'active' : ''}`}
+          style={activeButton === 'Null' ? {borderColor: 'black'} : {}}
+        >
+          Reset
+        </button>
       </div>
 
       <div className='scatterplot_plot'>

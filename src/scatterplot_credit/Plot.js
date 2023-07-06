@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import './plot.css';
 // import logEvent from '../Logger';
 
+
 const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform}) => {
   
   const seedableRandom = (seed) => {
@@ -14,19 +15,35 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 
   const svgRef = useRef();
   const zoomRef = useRef();
-
+  const jitterRef = useRef({});
 
   const getCategoryColor = (category) => {
     switch (category) {
-      case 'Good': return '#BBD6B8';
-      case 'Fair': return '#FAEDCD';
-      case 'Poor': return '#E74646';
+      case 'Good': return '#2ca02c94';
+      case 'Fair': return '#ff7e0ec0';
+      case 'Poor': return '#1f76b4b0';
       case 'Null': return 'white';
       default: return 'white';
     }
   };
 
   const tooltipRef = useRef();
+
+  useEffect(() => {
+    if (data) {
+      const xJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
+      const yJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
+  
+      data.forEach((d, i) => {
+        if (!jitterRef.current[i]) {
+          jitterRef.current[i] = {
+            x: xJitter(seedableRandom(i)),
+            y: yJitter(seedableRandom(i)),
+          };
+        }
+      });
+    }
+  }, [data?.length]);
 
   useEffect(() => {
     if (!data || !xColumn || !yColumn) return;
@@ -39,8 +56,6 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     const width = parseInt(svg.attr("width"));
     const height = parseInt(svg.attr("height"));
 
-    const xJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
-    const yJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
 
     const xScale = d3.scaleLinear()
       .domain(d3.extent(data, d => d[xColumn]))
@@ -87,17 +102,18 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         svg.select(".x-axis").call(xAxis.scale(newXScale));
         svg.select(".y-axis").call(yAxis.scale(newYScale));
 
-        const currentJitter = jitterScale(event.transform.k);
+        const jitterScaleFactor = transform.k;
     
         // Update the position and size of the points
         svg.selectAll(".point")
-          // .attr("cx", (d,i) => newXScale(d[xColumn] + xJitter(seedableRandom(i))))  
-          // .attr("cy", (d,i) => newYScale(d[yColumn] + yJitter(seedableRandom(i))));   
-          .attr("cx", (d, i) => newXScale(d[xColumn]) + currentJitter * xJitter(seedableRandom(i)))
-          .attr("cy", (d, i) => newYScale(d[yColumn]) + currentJitter * yJitter(seedableRandom(i)))
+
+          // .attr("cx", (d, i) => newXScale(d[xColumn]) + jitterRef.current[i].x)
+          // .attr("cy", (d, i) => newYScale(d[yColumn]) + jitterRef.current[i].y)
+          .attr("cx", (d, i) => newXScale(d[xColumn]) + jitterRef.current[i].x * jitterScaleFactor)
+          .attr("cy", (d, i) => newYScale(d[yColumn]) + jitterRef.current[i].y * jitterScaleFactor);
+
           // .attr("r", 7 / Math.sqrt(event.transform.k))
-      
-        
+
           setZoomTransform(event.transform);
       });
 
@@ -156,7 +172,9 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       // const newCategory = data[index].category === selectedCategory ? null : selectedCategory;
       const newCategory = selectedCategory;
       
+      // newData[index] = { ...data[index], category: newCategory, jitter: data[index].jitter };
       newData[index] = { ...data[index], category: newCategory };
+
     
       setData(newData);
     
@@ -169,6 +187,10 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         const currentTransform = d3.zoomTransform(svg.node());
         setZoomTransform(currentTransform);
       }
+
+      if (zoomTransform && zoomRef.current) {
+    svg.call(zoomRef.current.transform, zoomTransform);
+  }
     };
 
     // Add points
@@ -178,10 +200,8 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       .append("circle")
       .attr("class", "point")
       .attr("r", 7)
-      // .attr("cx", d => xScale(d[xColumn]))
-      // .attr("cy", d => yScale(d[yColumn]))
-      .attr("cx", (d,i) => xScale(d[xColumn])+ xJitter(seedableRandom(i)))
-      .attr("cy", (d,i) => yScale(d[yColumn])+ yJitter(seedableRandom(i)))
+      .attr("cx", (d, i) => xScale(d[xColumn]) + jitterRef.current[i].x)
+      .attr("cy", (d, i) => yScale(d[yColumn]) + jitterRef.current[i].y)
       .attr('data-category', null)
       .style("fill", d => getCategoryColor(d.category))
       .style("stroke", "black")
@@ -208,15 +228,10 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 
 return (
 <div>
-<svg ref={svgRef} width="1000" height="600" />
+<svg ref={svgRef} width="950" height="450" />
 <div ref={tooltipRef} className="tooltip" style={{ opacity: 0 }} />
 </div>
 );
 };
 
 export default Plot;
-
-
-
-
-

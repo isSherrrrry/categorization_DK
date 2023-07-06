@@ -28,6 +28,11 @@
   top: 50%;
 }
 
+.ui.selection.dropdown {
+  min-width: 13.6em !important; 
+  padding-left: 0.5em !important;
+}
+
 .select_axes{
   width:100vw;
   height: 90vh;
@@ -46,31 +51,62 @@
 }
 
 .SUV_button{
-  background-color: #BBD6B8 !important;
+  background-color: #2ca02c94 !important;
 }
 .Minivan_button{
-  background-color: #FAEDCD !important;
+  background-color: #ff7e0ec0 !important;
 }
 .Sedan_button{
-  background-color: #E74646 !important;
+  background-color: #1f76b4b0 !important;
 }
+
+
+.ui.button.SUV_button:hover {
+  background-color: #2ca02ce5 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+.ui.button.Minivan_button:hover {
+  background-color: #ff7e0ee9 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+.ui.button.Sedan_button:hover {
+  background-color: #1f76b4f1 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+.ui.button.reset_button:hover {
+  background-color: #9da1a4f1 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
 .scatterplot_plot{
-  margin-left: auto;
+  margin-left: 70px;
   margin-right: auto;
 }
+
 .buttons{
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 5px !important;
+  padding-bottom: 0px !important;
+  margin-top: 2px;
+  margin-bottom: 5px;
   display: flex;
   justify-content: center;
 }
+
 .buttons button~button{
   margin-left: 20px !important;
 }
 .continue_next{
   position: absolute;
-  bottom: 30px;
+  bottom: -195px !important;
   right: 100px;
+  margin-bottom: 20px !important;
 }
 
 .hover-container {

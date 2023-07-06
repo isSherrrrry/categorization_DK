@@ -4,41 +4,21 @@ import * as d3 from 'd3';
 import './plot.css';
 // import logEvent from '../Logger';
 
-const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform, hovered, setHovered, setPointLabeled, setPointClickedAfterReset, onZoom, onPan }) => {
-  const seedableRandom = (seed) => {
-    var x = Math.sin(seed++) * 10000;
-    return x - Math.floor(x);
-  }
-
-  const jitterScale = d3.scaleLinear().domain([0.1, 30]).range([1, 30]);
-  
+const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform }) => {
   const svgRef = useRef();
   const zoomRef = useRef();
 
   const getCategoryColor = (category) => {
     switch (category) {
-      case 'Bernedoodle': return '#2ca02c94';
-      case 'ShihTzu': return '#ff7e0ec0';
-      case 'AmericanBulldog': return '#1f76b4b0';
+      case 'SUV': return '#BBD6B8';
+      case 'Minivan': return '#FAEDCD';
+      case 'Sedan': return '#E74646';
       case 'Null': return 'white';
       default: return 'white';
     }
   };
 
   const tooltipRef = useRef();
-  const jitterAmount = 10;
-
-// Generate an array of random numbers between -jitterAmount and jitterAmount
-  const randomNumbers = [
-    -0.064, 0.052, -0.027, -0.008, -0.045, 0.039, -0.019, 0.087, -0.099, 0.01, -0.074, 0.026, 0.096, -0.055, 0.007
-  ];
-
-  // Add fixed jittering to the data
-  const jitteredData = data.map((d, i) => ({
-    ...d,
-    jitterX: randomNumbers[i] * jitterAmount,
-    jitterY: randomNumbers[i] * jitterAmount/0.123,
-  }));
 
 
   useEffect(() => {
@@ -50,9 +30,6 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     const svg = d3.select(svgRef.current);
     const width = parseInt(svg.attr("width"));
     const height = parseInt(svg.attr("height"));
-
-    const xJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
-    const yJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
 
     const xScale = d3.scaleLinear()
       .domain(d3.extent(data, d => d[xColumn]))
@@ -97,19 +74,13 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         // Update the axes
         svg.select(".x-axis").call(xAxis.scale(newXScale));
         svg.select(".y-axis").call(yAxis.scale(newYScale));
-
-        const currentJitter = jitterScale(event.transform.k);
     
         // Update the position and size of the points
         svg.selectAll(".point")
-          .attr("cx", (d, i) => newXScale(d[xColumn]) + currentJitter * xJitter(seedableRandom(i)))
-          .attr("cy", (d, i) => newYScale(d[yColumn]) + currentJitter * yJitter(seedableRandom(i)))
+          .attr("cx", d => newXScale(d[xColumn]))
+          .attr("cy", d => newYScale(d[yColumn]));
         
           setZoomTransform(event.transform);
-
-          if (onZoom) {
-            onZoom();
-          }
       });
 
     zoomRef.current = zoom;
@@ -139,30 +110,8 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       .attr("transform", "translate(40, 0)")
       .call(yAxis);
 
-    const pan = d3
-    .drag()
-    .on('start', () => {
-      // Optional: you may want to add something here
-    })
-    .on('drag', (event) => {
-      const { dx, dy } = event;
-      const currentTransform = d3.zoomTransform(svg.node());
-      const newTransform = d3.zoomIdentity
-        .translate(currentTransform.x + dx, currentTransform.y + dy)
-        .scale(currentTransform.k);
-      svg.call(zoomRef.current.transform, newTransform);
-      
-      if (onPan) {
-        onPan();
-      }
-    });
-
-    svg.call(pan);
-    
-    
     const onMouseOver = (event, d) => {
         const tooltip = d3.select(tooltipRef.current);
-        setHovered(true);
         let content = '';
         for (const key in d) {
             content += `<b>${key}:</b> ${d[key]}<br>`;
@@ -188,10 +137,6 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       const newData = [...data];
       // const newCategory = data[index].category === selectedCategory ? null : selectedCategory;
       const newCategory = selectedCategory;
-
-
-      setPointLabeled(true);
-      setPointClickedAfterReset(true);
     
       newData[index] = { ...data[index], category: newCategory };
     
@@ -215,15 +160,14 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       .append("circle")
       .attr("class", "point")
       .attr("r", 7)
-      .attr("cx", (d,i) => xScale(d[xColumn])+ xJitter(seedableRandom(i)))
-      .attr("cy", (d,i) => yScale(d[yColumn])+ yJitter(seedableRandom(i)))
+      .attr("cx", d => xScale(d[xColumn]))
+      .attr("cy", d => yScale(d[yColumn]))
       .attr('data-category', null)
       .style("fill", d => getCategoryColor(d.category))
       .style("stroke", "black")
       .on("mouseover", onMouseOver)
       .on("mouseout", onMouseOut)
       .on("click", onClick);
-    
 
     // Apply lower opacity to gridlines
     svg.selectAll('.x-gridlines .tick line')
@@ -239,15 +183,20 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 
     svg.call(zoom);
 
-    }, [data, xColumn, yColumn, setData, selectedCategory, setZoomTransform, hovered, setHovered, onZoom, onPan]);
+    }, [data, xColumn, yColumn, setData, selectedCategory, setZoomTransform]);
     
 
 return (
 <div>
-<svg ref={svgRef} width="950" height="450" />
+<svg ref={svgRef} width="1000" height="600" />
 <div ref={tooltipRef} className="tooltip" style={{ opacity: 0 }} />
 </div>
 );
 };
 
 export default Plot;
+
+
+
+
+

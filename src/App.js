@@ -10,10 +10,11 @@ import PostSurvey from './presurvey/PostSurvey'
 import Scatterplot_dog from './scatterplot_dog/Scatterplot';
 import SelectAxes_dog from './scatterplot_dog/SelectAxes';
 import IntroPractice from './scatterplot_dog/IntroPractice';
+import StopTracking from './scatterplot_dog/StopTracking';
 import IntroFormal from './scatterplot_dog/IntroFormal';
 import Scatterplot_car from './scatterplot_car/Scatterplot';
 import SelectAxes_car from './scatterplot_car/SelectAxes';
-import ThankYou from './presurvey/ThankYou'
+import ThankYouPage from './presurvey/ThankYouPage'
 import TutorialPage from './consent/Tutorial';
 
 function App() {
@@ -31,9 +32,10 @@ function App() {
         <Route path="/scatterplot_dog" element={<Scatterplot_dog/>} />
         <Route path="/selectaxis_car" element={<SelectAxes_car/>} />
         <Route path="/scatterplot_car" element={<Scatterplot_car/>} />
-        <Route path="/thankyou" element={<ThankYou/>} />
+        <Route path="/thankyou" element={<ThankYouPage/>} />
         <Route path="/intro_pactice" element={<IntroPractice/>} />
         <Route path="/intro_formal" element={<IntroFormal/>} />
+        <Route path="/stop_tracking" element={<StopTracking/>} />
 
       </Routes>
    </Router>

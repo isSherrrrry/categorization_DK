@@ -1,9 +1,10 @@
 .scatterplot{
   position: relative;
   width: 100%;
-  height: 800px;
+  height: 400px !important;
   display: flex;
   flex-direction: column;
+  /* margin-bottom: -100px; */
 }
 .tooltip {
   position: absolute;
@@ -17,17 +18,43 @@
   pointer-events: none;
   top: -20px;
 }
+
+.ui.selection.dropdown {
+  min-width: 13.6em !important; 
+  padding-left: 0.5em !important;
+}
+
+/* .ui.dropdown .menu>.item {
+  font-size: 0.8rem !important;
+} */
+
+.ui.button {
+  border-style: solid;
+  border-width: 2px;
+  border-color: transparent;
+}
+
 .x-axis{
   position: absolute;
-  bottom: 30px;
+  bottom: -170px !important;
   left:600px;
-
+  /* margin-top: -10px; */
 }
+
 .y-axis{
   position: absolute;
-  left: 20px;
+  left: 10px;
   top: 50%;
+  margin-top: 50px;
+  margin-left: -15px;
 
+}
+
+.continue_next{
+  position: absolute;
+  bottom: -175px !important;
+  right: 100px;
+  margin-bottom: 10px !important;
 }
 
 .select_axes{
@@ -48,32 +75,67 @@
 }
 
 .Bernedoodle_button{
-  background-color: #BBD6B8 !important;
+  background-color: #2ca02c94 !important;
 }
 .ShihTzu_button{
-  background-color: #FAEDCD !important;
+  background-color: #ff7e0e9d !important;
 }
 .AmericanBulldog_button{
-  background-color: #E74646 !important;
+  background-color: #1f76b4b0 !important;
 }
+
+.ui.button.Bernedoodle_button:hover {
+  background-color: #2ca02ce5 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+.ui.button.ShihTzu_button:hover {
+  background-color: #ff7e0ee9 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+.ui.button.AmericanBulldog_button:hover {
+  background-color: #1f76b4f1 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+.ui.button.reset_button:hover {
+  background-color: #9da1a4f1 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+/* .Good_button.active {
+  background-color: #2ca02ce5 !important; 
+}
+
+.Fair_button.active {
+  background-color:  #ff7e0ee9 !important; 
+}
+
+.Poor_button.active {
+  background-color: #1f76b4f1 !important; 
+} */
+
 .scatterplot_plot{
-  margin-left: auto;
+  padding-left: 70px;
   margin-right: auto;
 }
 .buttons{
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
   display: flex;
   justify-content: center;
 }
 .buttons button~button{
   margin-left: 20px !important;
 }
-.continue_next{
-  position: absolute;
-  bottom: 30px;
-  right: 100px;
-}
+
 
 .hover-container {
   position: relative;
@@ -100,6 +162,7 @@
   background-color: #ccc;
   color: #fff;
 }
+
 button .active {
   border-color: black !important;
   border-width: 2px !important;
@@ -128,4 +191,8 @@ button .active {
   background-color: rgba(172, 8, 8, 0.5);
   padding: 30px;
   right: 0;
+}
+
+.bold {
+  font-weight: bold !important;
 }
