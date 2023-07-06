@@ -22,15 +22,39 @@ function ScatterPlot() {
   const [activeButton, setActiveButton] = useState(null);
 
   
-  
+//   function addJitter(value, amount) {
+//     return value + (Math.random() - 0.5) * amount;
+// }
+
+// function jitterData(data, xProp, yProp, amount) {
+//   return data.map(d => ({
+//       ...d, 
+//       [xProp]: addJitter(d[xProp], amount),
+//       [yProp]: addJitter(d[yProp], amount)
+//   }));
+// }
+
+// const handleXAxisSelection = (e, { value }) => {
+//   const jitteredData = jitterData(data, value, yColumn, 1);
+//   setData(jitteredData);
+//   setXColumn(value);
+// }
+
+// const handleYAxisSelection = (e, { value }) => {
+//   const jitteredData = jitterData(data, xColumn, value, 1);
+//   setData(jitteredData);
+//   setYColumn(value);
+// }
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/credit_removed.csv');
+      const response = await fetch('/car_removed.csv');
       const csvData = await response.text();
       const parsedData = Papa.parse(csvData, {
         header: true,
         dynamicTyping: true,
       });
+
       setData(parsedData.data);
       setData(parsedData.data.map(d => ({ ...d, category: null })));
       setColumns(parsedData.meta.fields);
@@ -52,23 +76,16 @@ function ScatterPlot() {
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
     if (coloredPoints.length >= 25) {
-      if (localStorage.getItem("first_task") == 'credit'){
-        navigate('/selectaxis_car');
-
+      if (localStorage.getItem("first_task") == 'car'){
+        navigate('/selectaxis_credit');
       } else {
-        navigate('/stop_tracking');  
+        navigate('/postsurvey');   
       }
       
     } else {
       alert('Please color at least 25 points before continuing.');
     }
   }
-
-  useEffect(() => {
-    if (scatterplotRef.current) {
-      console.log(scatterplotRef.current.offsetWidth); // Logs the width of the element
-    }
-  }, []);
 
   useEffect(() => {
     async function initializeWebGazer() {
@@ -99,20 +116,23 @@ function ScatterPlot() {
 
   return (
     <div className="scatterplot">
-      
       <div class="hover-container">
         <div class="hover-trigger">
           Help
         </div>
         <div class="info-bar">
           <p>Your task is to <b>categorize all points in the scatterplot</b>.
-              <ul>
-                <li><b>Hover</b> over a point to see details</li>
-                <li><b>Click</b> the colored label on the top corresponding the label you would like to apply</li>
-                <li><b>Click</b> the point(s) in the scatterplot to label with the selected label</li>
-                <li><b>Click</b> <i>Reset</i> then click the respective point in the scatterplot if you wanted to change your previous label</li>
-              </ul>
-            </p>
+            <ul>
+              <li><b>Hover</b> over a point to see details</li>
+              <li><b>Click</b> the colored label on the top corresponding the label you would like to apply</li>
+              <li><b>Click</b> the point(s) in the scatterplot to label with the selected label</li>
+              <li><b>Click</b> <i>Reset</i> then click the respective point in the scatterplot if you wanted to change your previous label</li>
+            </ul>
+          </p>
+
+
+ 
+
         </div>
       </div>
       <div className='x-axis'>
@@ -120,13 +140,14 @@ function ScatterPlot() {
           placeholder={xColumn}
           selection
           options={columns
-            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID'].includes(column))
+            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID', 'CarType'].includes(column))
             .map(column => ({
               key: `x-${column}`,
               text: column,
               value: column
             }))}
           onChange={(e, { value }) => setXColumn(value)}
+          // onChange={handleXAxisSelection}
         />
       </div>
       <div className='y-axis'>
@@ -134,51 +155,50 @@ function ScatterPlot() {
           placeholder={yColumn}
           selection
           options={columns
-            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID'].includes(column))
+            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID', 'CarType'].includes(column))
             .map(column => ({
               key: `y-${column}`,
               text: column,
               value: column
             }))}
           onChange={(e, { value }) => setYColumn(value)}
+          // onChange={handleYAxisSelection}
         />
       </div>
 
       <div className='buttons'>
-        <button 
-            onClick={() => {setSelectedCategory('Good'); setActiveButton('Good');}} 
-            className={`ui button Good_button ${activeButton === 'Good' ? 'active' : ''}`}
-            style={activeButton === 'Good' ? {borderColor: 'black'} : {}}
+      <button 
+            onClick={() => {setSelectedCategory('Sedan'); setActiveButton('Sedan');}} 
+            className={`ui button Sedan_button ${activeButton === 'Sedan' ? 'active' : ''}`}
+            style={activeButton === 'Sedan' ? {borderColor: 'black'} : {}}
           >
-            Good
+            Sedan
           </button>
           <button 
-            onClick={() => {setSelectedCategory('Fair'); setActiveButton('Fair');}} 
-            className={`ui button Fair_button ${activeButton === 'Fair' ? 'active' : ''}`}
-            style={activeButton === 'Fair' ? {borderColor: 'black'} : {}}
+            onClick={() => {setSelectedCategory('SUV'); setActiveButton('SUV');}} 
+            className={`ui button SUV_button ${activeButton === 'SUV' ? 'active' : ''}`}
+            style={activeButton === 'SUV' ? {borderColor: 'black'} : {}}
           >
-            Fair
+            SUV
           </button>
           <button 
-            onClick={() => {setSelectedCategory('Poor'); setActiveButton('Poor');}} 
-            className={`ui button Poor_button ${activeButton === 'Poor' ? 'active' : ''}`}
-            style={activeButton === 'Poor' ? {borderColor: 'black'} : {}}
+            onClick={() => {setSelectedCategory('Minivan'); setActiveButton('Minivan');}} 
+            className={`ui button Minivan_button ${activeButton === 'Minivan' ? 'active' : ''}`}
+            style={activeButton === 'Minivan' ? {borderColor: 'black'} : {}}
           >
-            Poor
+            Minivan
           </button>
           <button 
             onClick={() => {setSelectedCategory('Null'); setActiveButton('Null');}} 
-            className={`ui button reset_button ${activeButton === 'Null' ? 'active' : ''}`}
+            className={`ui button ${activeButton === 'Null' ? 'active' : ''}`}
             style={activeButton === 'Null' ? {borderColor: 'black'} : {}}
           >
             Reset
           </button>
       </div>
 
-      <div className='scatterplot_plot' ref={scatterplotRef}>
-      <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform}  
-      // xJitterRef={xJitterRef} yJitterRef={yJitterRef}
-      />
+      <div className='scatterplot_plot'>
+      <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform} />
 
       </div>
 

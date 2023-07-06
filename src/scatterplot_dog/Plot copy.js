@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import './plot.css';
 // import logEvent from '../Logger';
 
-const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform, hovered, setHovered, setPointLabeled, setPointClickedAfterReset, onZoom, onPan }) => {
+const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform, hovered, setHovered, setPointLabeled, setPointClickedAfterReset}) => {
   const seedableRandom = (seed) => {
     var x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
@@ -18,7 +18,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
   const getCategoryColor = (category) => {
     switch (category) {
       case 'Bernedoodle': return '#2ca02c94';
-      case 'ShihTzu': return '#ff7e0ec0';
+      case 'ShihTzu': return '#ff7e0e9d';
       case 'AmericanBulldog': return '#1f76b4b0';
       case 'Null': return 'white';
       default: return 'white';
@@ -106,10 +106,6 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
           .attr("cy", (d, i) => newYScale(d[yColumn]) + currentJitter * yJitter(seedableRandom(i)))
         
           setZoomTransform(event.transform);
-
-          if (onZoom) {
-            onZoom();
-          }
       });
 
     zoomRef.current = zoom;
@@ -139,27 +135,6 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       .attr("transform", "translate(40, 0)")
       .call(yAxis);
 
-    const pan = d3
-    .drag()
-    .on('start', () => {
-      // Optional: you may want to add something here
-    })
-    .on('drag', (event) => {
-      const { dx, dy } = event;
-      const currentTransform = d3.zoomTransform(svg.node());
-      const newTransform = d3.zoomIdentity
-        .translate(currentTransform.x + dx, currentTransform.y + dy)
-        .scale(currentTransform.k);
-      svg.call(zoomRef.current.transform, newTransform);
-      
-      if (onPan) {
-        onPan();
-      }
-    });
-
-    svg.call(pan);
-    
-    
     const onMouseOver = (event, d) => {
         const tooltip = d3.select(tooltipRef.current);
         setHovered(true);
@@ -239,12 +214,12 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 
     svg.call(zoom);
 
-    }, [data, xColumn, yColumn, setData, selectedCategory, setZoomTransform, hovered, setHovered, onZoom, onPan]);
+    }, [data, xColumn, yColumn, setData, selectedCategory, setZoomTransform, hovered, setHovered]);
     
 
 return (
 <div>
-<svg ref={svgRef} width="950" height="450" />
+<svg ref={svgRef} width="1050" height="450" />
 <div ref={tooltipRef} className="tooltip" style={{ opacity: 0 }} />
 </div>
 );

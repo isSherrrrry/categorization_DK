@@ -1,7 +1,7 @@
 .scatterplot{
   position: relative;
   width: 100%;
-  height: 800px;
+  height: 400px !important;
   display: flex;
   flex-direction: column;
 }
@@ -17,15 +17,38 @@
   pointer-events: none;
   top: -20px;
 }
+
+.ui.selection.dropdown {
+  min-width: 13.6em !important; 
+  padding-left: 0.5em !important;
+}
+
+.ui.button {
+  border-style: solid;
+  border-width: 2px;
+  border-color: transparent;
+}
+
 .x-axis{
   position: absolute;
-  bottom: 30px;
+  bottom: -170px !important;
   left:600px;
+  margin-top: -10px;
 }
+
 .y-axis{
   position: absolute;
-  left: 20px;
+  left: 10px;
   top: 50%;
+  margin-top: 50px;
+  margin-left: -15px;
+}
+
+.continue_next{
+  position: absolute;
+  bottom: -195px !important;
+  right: 100px;
+  /* margin-bottom: 20px !important; */
 }
 
 .select_axes{
@@ -46,31 +69,53 @@
 }
 
 .Good_button{
-  background-color: #BBD6B8 !important;
+  background-color: #2ca02c94 !important;
 }
 .Fair_button{
-  background-color: #FAEDCD !important;
+  background-color: #ff7e0ec0 !important;
 }
 .Poor_button{
-  background-color: #E74646 !important;
+  background-color: #1f76b4b0 !important;
 }
+
+.ui.button.Good_button:hover {
+  background-color: #2ca02ce5 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+.ui.button.Fair_button:hover {
+  background-color: #ff7e0ee9 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+.ui.button.Poor_button:hover {
+  background-color: #1f76b4f1 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
+.ui.button.reset_button:hover {
+  background-color: #9da1a4f1 !important;  
+  border-width: 2px !important;  
+  border-color: #000 !important;  
+}
+
 .scatterplot_plot{
-  margin-left: auto;
+  margin-left: 120px !important;
   margin-right: auto;
 }
 .buttons{
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 5px !important;
+  padding-bottom: 0px !important;
+  margin-top: 2px;
+  margin-bottom: 5px;
   display: flex;
   justify-content: center;
 }
 .buttons button~button{
   margin-left: 20px !important;
-}
-.continue_next{
-  position: absolute;
-  bottom: 30px;
-  right: 100px;
 }
 
 .hover-container {
