@@ -187,10 +187,6 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         const currentTransform = d3.zoomTransform(svg.node());
         setZoomTransform(currentTransform);
       }
-
-      if (zoomTransform && zoomRef.current) {
-    svg.call(zoomRef.current.transform, zoomTransform);
-  }
     };
 
     // Add points
@@ -216,14 +212,14 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         .style('stroke-opacity', 0.3);
 
     // Call the zoom behavior on the SVG
+
+    svg.call(zoom);
   
     if (zoomTransform && zoomRef.current) {
       svg.call(zoomRef.current.transform, zoomTransform);
     }
 
-    svg.call(zoom);
-
-    }, [data, xColumn, yColumn, setData, selectedCategory, setZoomTransform]);
+    }, [data, xColumn, yColumn, setData, selectedCategory, setZoomTransform, zoomTransform]);
     
 
 return (

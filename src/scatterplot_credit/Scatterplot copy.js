@@ -20,6 +20,8 @@ function ScatterPlot() {
   const scatterplotRef = useRef(null);
   const webgazer = window.webgazer;
   const [activeButton, setActiveButton] = useState(null);
+
+  
   
   useEffect(() => {
     const fetchData = async () => {
@@ -54,13 +56,19 @@ function ScatterPlot() {
         navigate('/selectaxis_car');
 
       } else {
-        navigate('/postsurvey');  
+        navigate('/stop_tracking');  
       }
       
     } else {
       alert('Please color at least 25 points before continuing.');
     }
   }
+
+  useEffect(() => {
+    if (scatterplotRef.current) {
+      console.log(scatterplotRef.current.offsetWidth); // Logs the width of the element
+    }
+  }, []);
 
   useEffect(() => {
     async function initializeWebGazer() {
@@ -160,14 +168,14 @@ function ScatterPlot() {
           </button>
           <button 
             onClick={() => {setSelectedCategory('Null'); setActiveButton('Null');}} 
-            className={`ui button ${activeButton === 'Null' ? 'active' : ''}`}
+            className={`ui button reset_button ${activeButton === 'Null' ? 'active' : ''}`}
             style={activeButton === 'Null' ? {borderColor: 'black'} : {}}
           >
             Reset
           </button>
       </div>
 
-      <div className='scatterplot_plot'>
+      <div className='scatterplot_plot' ref={scatterplotRef}>
       <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform}  
       // xJitterRef={xJitterRef} yJitterRef={yJitterRef}
       />
