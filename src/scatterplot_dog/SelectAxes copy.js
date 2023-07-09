@@ -65,18 +65,14 @@ const styles = {
 
 function SelectAxes() {
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const refreshPage = () => {
+    if (!localStorage.getItem("alreadyLoaded")) {
+      localStorage.setItem("alreadyLoaded", "true");
       window.location.reload();
-    };
-  
-    if (!localStorage.getItem("alreadyRefreshed")) {
-      localStorage.setItem("alreadyRefreshed", "true");
-      setTimeout(refreshPage, 0); 
     }
   }, []);
-
-  const navigate = useNavigate();
   
   const [columns, setColumns] = useState([]);
   const [xColumn, setXColumn] = useState(null);
@@ -104,7 +100,6 @@ function SelectAxes() {
       alert('Please select both x and y axes.');
     }
   };
-  
   
   return (
     <div style={styles.container}>

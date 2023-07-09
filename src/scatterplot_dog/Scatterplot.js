@@ -33,6 +33,16 @@ function ScatterPlot() {
   const [isPanActive, setIsPanActive] = useState(false);
 
   const [currentStep, setCurrentStep] = useState(0);
+
+  const nextStep = () => {
+    if (currentStep < steps.length - 1 && !steps[currentStep].condition()) {
+      alert("Please complete the current step before proceeding.");
+      return;
+    }
+  
+    setCurrentStep(currentStep + 1);
+  };
+  
   const steps = [
     { condition: () => !hovered, message: 'Hover on a point to get details regarding it.' },
     { condition: () => hovered && !axisChanged, message: 'Yay! Change the axes with the drop-down menu. Try changing another axis now to any other attribute you would like.' },

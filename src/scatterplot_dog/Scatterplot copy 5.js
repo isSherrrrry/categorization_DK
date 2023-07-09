@@ -29,12 +29,16 @@ function ScatterPlot() {
   const [allLabeled, setAllLabeled] = useState(false);
 
   const [pointClickedAfterReset, setPointClickedAfterReset] = useState(false);
+  const [hasZoomed, setHasZoomed] = useState(false);
+  const [isPanActive, setIsPanActive] = useState(false);
 
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [
     { condition: () => !hovered, message: 'Hover on a point to get details regarding it.' },
     { condition: () => hovered && !axisChanged, message: 'Yay! Change the axes with the drop-down menu. Try changing another axis now to any other attribute you would like.' },
-    { condition: () => axisChanged && !pointLabeled, message: 'Excellent! Click on one of the BREED buttons (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then label one of the points in the scatterplot by clicking on it.' },
+    { condition: () => axisChanged && !hasZoomed, message: 'You may zoom in the scatterplot to see overlapping points.' },
+    { condition: () => hasZoomed && !isPanActive, message: 'Yes! You may zoom out or drag the scatterplot and explore different regions' },
+    { condition: () => isPanActive && !pointLabeled, message: 'Excellent! Click on one of the BREED buttons (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then label one of the points in the scatterplot by clicking on it.' },
     { condition: () => pointLabeled && !pointReset, message: 'If you change your mind, select the RESET button.' },
     { condition: () => pointReset && !pointClickedAfterReset, message: 'Then click on the point that you\'d like to reset.' },
     { condition: () => pointClickedAfterReset && pointLabeled && !helpVisible, message: 'If you need help at any point, hover on the HELP button.' },
@@ -49,7 +53,14 @@ function ScatterPlot() {
     return steps.length;
   };
 
+  const handleZoom = () => {
+    setHasZoomed(true);
+  };
 
+  const handlePan = () => {
+    setIsPanActive(true);
+    console.log('Pan event occurred');
+  };
 
   const toggleHelp = () => {
     // setHelpVisible(!helpVisible);
@@ -137,7 +148,7 @@ const handleYAxisSelection = (e, { value }) => {
 
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
-    if (!steps[6].condition()) {
+    if (!steps[8].condition()) {
       alert('Please make sure you compelete the step-by-step tutorial.');
     } else if (coloredPoints.length < 12) {
       alert('Please color at least 12 points before continuing.');
@@ -146,10 +157,6 @@ const handleYAxisSelection = (e, { value }) => {
     }
   }
 
-  // console.log("pointClickedAfterReset: ", pointClickedAfterReset);
-  // console.log("helpVisible: ", helpVisible);
-  // console.log("pointLabeled: ", pointLabeled);
-  // console.log("pointReset: ", pointReset);
 
   const step = getCurrentStep();
 
@@ -158,10 +165,55 @@ const handleYAxisSelection = (e, { value }) => {
     <div className="scatterplot" ref={scatterplotRef}>
       <div className='tutorial_part'>
         <div>
+          <h3>Tutorial</h3>
           <p>
             <b>Step {step + 1}/{steps.length}:</b> {steps[step].message}
           </p>
         </div>
+
+      
+
+
+        {/* {!hovered && (
+          <div>
+            <p><b>Step 1/7:</b> Hover on a point to get details regarding it. <br/><br/></p>
+          </div>
+        )}
+        {hovered && !axisChanged && (
+          <div>
+            <p><b>Step 2/7:</b> B-I-N-G-O! Change the axes with the drop-down menu. <br/><br/>Try changing <u>another axis</u> now to any other attribute you'd like.<br/><br/></p>
+          </div>
+        )}
+        {axisChanged && !pointLabeled &&( 
+          <div>
+            <p><b>Step 3/7:</b> Excellent! Click on one of the <u>BREED buttons</u> (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then <u>label</u> one of the points in the scatterplot by clicking on it. <br/><br/></p>
+          </div>
+        )}
+
+        {pointLabeled && !pointReset && (
+        
+          <div>
+            <p><b>Step 4/7:</b> If you change your mind, select the RESET button. <br/><br/></p>
+          </div>
+        )}
+
+        {pointReset && !pointClickedAfterReset && (
+          <div>
+            <p><b>Step 5/7:</b> Then click on the point. <br/><br/></p>
+          </div>
+        )}
+
+        
+        {pointClickedAfterReset && !helpVisible && pointLabeled && (
+          <div>
+            <p><b>Step 6/7:</b> If you need help at any point, hover on the HELP button. <br/><br/></p>
+          </div>
+        )}
+        {helpVisible && !allLabeled && (
+          <div>
+            <p><b>Step 7/7:</b> Got it! Before you proceed to the first task, go ahead and <u>label all of the points</u>. <br/><br/>Click <u>Continue</u> when you are done.</p>
+          </div>
+        )} */}
       
       </div>
       <div className="hover-container">
@@ -174,7 +226,6 @@ const handleYAxisSelection = (e, { value }) => {
       </div>
       <div className='x-axis'>
       <Dropdown
-          className="dropdown"
           placeholder={xColumn}
           selection
           options={columns
@@ -192,7 +243,6 @@ const handleYAxisSelection = (e, { value }) => {
       </div>
       <div className='y-axis'>
         <Dropdown
-          className="dropdown"
           placeholder={yColumn}
           selection
           options={columns
@@ -245,7 +295,7 @@ const handleYAxisSelection = (e, { value }) => {
         </button>
         <button 
           onClick={() => {setSelectedCategory('Null'); setActiveButton('Null'); handleResetClick();}} 
-          className={`ui button ${activeButton === 'Null' ? 'active' : ''}`}
+          className={`ui button reset_button ${activeButton === 'Null' ? 'active' : ''}`}
           style={activeButton === 'Null' ? {borderColor: 'black'} : {}}
         >
           Reset
@@ -256,7 +306,11 @@ const handleYAxisSelection = (e, { value }) => {
         <Plot data={data} xColumn={xColumn} yColumn={yColumn} selectedCategory={selectedCategory} 
         setPointLabeled={setPointLabeled}
         setPointClickedAfterReset={setPointClickedAfterReset}
-        setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform} hovered={hovered} setHovered={setHovered} />
+        setData={setData} zoomTransform={zoomTransform} setZoomTransform={setZoomTransform} hovered={hovered} setHovered={setHovered}
+        onZoom={handleZoom}
+        onPan={handlePan}
+
+        />
       </div>
 
       <div className='continue_next'>
