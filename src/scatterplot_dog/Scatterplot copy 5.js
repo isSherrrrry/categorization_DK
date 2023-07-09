@@ -6,8 +6,7 @@ import { Dropdown } from 'semantic-ui-react';
 import React, { useState, useEffect, useRef } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import './plot.css'
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { hover } from '@testing-library/user-event/dist/hover';
 
 function ScatterPlot() {
   const [data, setData] = useState([]);
@@ -19,8 +18,8 @@ function ScatterPlot() {
   const location = useLocation();
   const navigate = useNavigate();
   const scatterplotRef = useRef(null);
+  const webgazer = window.webgazer;
   const [activeButton, setActiveButton] = useState(null);
-  
 
   const [helpVisible, setHelpVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -33,31 +32,7 @@ function ScatterPlot() {
   const [hasZoomed, setHasZoomed] = useState(false);
   const [isPanActive, setIsPanActive] = useState(false);
 
-  const [userId] = useState(localStorage.getItem('userId'));
-  
-  const firebaseConfig = {
-    apiKey: "AIzaSyAHS7JCzpZAkLRmgilLdGDp9251l4HOO94",
-    authDomain: "dkeffect-3776d.firebaseapp.com",
-    projectId: "dkeffect-3776d",
-    storageBucket: "dkeffect-3776d.appspot.com",
-    messagingSenderId: "356413199968",
-    appId: "1:356413199968:web:3211cbe960df3c8d4d9505",
-    measurementId: "G-WE3CHELSN1"
-  };
-  const app = initializeApp(firebaseConfig);
-  const firestore = getFirestore(app);
-
   const [currentStep, setCurrentStep] = useState(0);
-
-  const nextStep = () => {
-    if (currentStep < steps.length - 1 && !steps[currentStep].condition()) {
-      alert("Please complete the current step before proceeding.");
-      return;
-    }
-  
-    setCurrentStep(currentStep + 1);
-  };
-  
   const steps = [
     { condition: () => !hovered, message: 'Hover on a point to get details regarding it.' },
     { condition: () => hovered && !axisChanged, message: 'Yay! Change the axes with the drop-down menu. Try changing another axis now to any other attribute you would like.' },
@@ -100,13 +75,15 @@ function ScatterPlot() {
 
   const handleResetClick = (event) => {
     setPointReset(true);
+
     // setPointLabeled(false); // Reset the pointLabeled state when a point is reset
     setPointClickedAfterReset(false);
 
   };
 
-  const handleXAxisChange = (event) => {
+  const handleAxisChange = (event) => {
     setAxisChanged(true);
+
   };
 
   const handlePointHover = (event) => {
@@ -143,8 +120,6 @@ const handleYAxisSelection = (e, { value }) => {
   setData(jitteredData);
   setYColumn(value);
 }
-
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -196,6 +171,50 @@ const handleYAxisSelection = (e, { value }) => {
           </p>
         </div>
 
+      
+
+
+        {/* {!hovered && (
+          <div>
+            <p><b>Step 1/7:</b> Hover on a point to get details regarding it. <br/><br/></p>
+          </div>
+        )}
+        {hovered && !axisChanged && (
+          <div>
+            <p><b>Step 2/7:</b> B-I-N-G-O! Change the axes with the drop-down menu. <br/><br/>Try changing <u>another axis</u> now to any other attribute you'd like.<br/><br/></p>
+          </div>
+        )}
+        {axisChanged && !pointLabeled &&( 
+          <div>
+            <p><b>Step 3/7:</b> Excellent! Click on one of the <u>BREED buttons</u> (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then <u>label</u> one of the points in the scatterplot by clicking on it. <br/><br/></p>
+          </div>
+        )}
+
+        {pointLabeled && !pointReset && (
+        
+          <div>
+            <p><b>Step 4/7:</b> If you change your mind, select the RESET button. <br/><br/></p>
+          </div>
+        )}
+
+        {pointReset && !pointClickedAfterReset && (
+          <div>
+            <p><b>Step 5/7:</b> Then click on the point. <br/><br/></p>
+          </div>
+        )}
+
+        
+        {pointClickedAfterReset && !helpVisible && pointLabeled && (
+          <div>
+            <p><b>Step 6/7:</b> If you need help at any point, hover on the HELP button. <br/><br/></p>
+          </div>
+        )}
+        {helpVisible && !allLabeled && (
+          <div>
+            <p><b>Step 7/7:</b> Got it! Before you proceed to the first task, go ahead and <u>label all of the points</u>. <br/><br/>Click <u>Continue</u> when you are done.</p>
+          </div>
+        )} */}
+      
       </div>
       <div className="hover-container">
         <div className="hover-trigger" onMouseEnter={toggleHelp}>
@@ -217,17 +236,8 @@ const handleYAxisSelection = (e, { value }) => {
               value: column
             }))}
           onChange={(e, { value }) => {
-            const eventsCollection = collection(firestore, userId);
-            addDoc(eventsCollection, {
-              event: 'interaction',
-              type: 'axis_x',
-              task: 'dog',
-              org_axis: xColumn,
-              new_axis: value,
-              timestamp: new Date(),
-            });
             setXColumn(value);
-            handleXAxisChange();
+            handleAxisChange();
           }}
         />
       </div>
@@ -242,18 +252,7 @@ const handleYAxisSelection = (e, { value }) => {
               text: column,
               value: column
             }))}
-          onChange={(e, { value }) => {
-            const eventsCollection = collection(firestore, userId);
-            addDoc(eventsCollection, {
-              event: 'interaction',
-              type: 'axis_y',
-              task: 'dog',
-              org_axis: yColumn,
-              new_axis: value,
-              timestamp: new Date(),
-            });
-            setYColumn(value);
-          }}
+          onChange={(e, { value }) => setYColumn(value)}
         />
       </div>
 
