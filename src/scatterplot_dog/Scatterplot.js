@@ -211,6 +211,7 @@ const handleYAxisSelection = (e, { value }) => {
             addDoc(eventsCollection, {
               event: 'interaction',
               type: 'axis_x',
+              task: 'dog',
               org_axis: xColumn,
               new_axis: value,
               timestamp: new Date(),
@@ -236,6 +237,7 @@ const handleYAxisSelection = (e, { value }) => {
             addDoc(eventsCollection, {
               event: 'interaction',
               type: 'axis_y',
+              task: 'dog',
               org_axis: yColumn,
               new_axis: value,
               timestamp: new Date(),

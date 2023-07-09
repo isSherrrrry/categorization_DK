@@ -134,6 +134,7 @@ function SelectAxes() {
                 addDoc(eventsCollection, {
                   event: 'interaction',
                   type: 'axis_x',
+                  task: 'credit',
                   org_axis: xColumn,
                   new_axis: value,
                   timestamp: new Date(),
@@ -160,6 +161,7 @@ function SelectAxes() {
               addDoc(eventsCollection, {
                 event: 'interaction',
                 type: 'axis_y',
+                task: 'credit',
                 org_axis: yColumn,
                 new_axis: value,
                 timestamp: new Date(),

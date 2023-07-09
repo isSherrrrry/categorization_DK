@@ -128,10 +128,13 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
           if (onZoom) {
             onZoom();
           }
+
+          onZoom();
           const eventsCollection = collection(firestore, userId);
           addDoc(eventsCollection, {
             event: 'interaction',
             type: 'zoom',
+            task: 'dog',
             zoom_level: event.transform.k,
             timestamp: new Date(),
           });
@@ -185,6 +188,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       addDoc(eventsCollection, {
         event: 'interaction',
         type: 'drag',
+        task: 'dog',
         origin_x: currentTransform.x,
         origin_y: currentTransform.y,
         dx: dx,
@@ -228,6 +232,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         addDoc(eventsCollection, {
           event: 'interaction',
           type: 'hover',
+          task: 'dog',
           point: newData[index].name,
           x: d[xColumn],
           y: d[yColumn],
@@ -238,7 +243,6 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         hoverStartTime = null;
       }
     
-      setHovered(false);
     };
 
     const onClick = (event, d) => {
@@ -269,6 +273,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       addDoc(eventsCollection, {
         event: 'interaction',
         type: 'click',
+        task: 'dog',
         point: newData[index].name,
         category: newData[index].category,
         x: d[xColumn],
@@ -277,8 +282,6 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       });
     
       // Update state
-      setPointClickedAfterReset(false);
-      setPointLabeled(d.id);
     };
 
     // Add points

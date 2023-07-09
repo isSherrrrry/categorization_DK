@@ -134,6 +134,8 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         addDoc(eventsCollection, {
           event: 'interaction',
           type: 'zoom',
+          task: 'credit',
+          task: 'credit',
           zoom_level: event.transform.k,
           timestamp: new Date(),
         });
@@ -183,6 +185,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         addDoc(eventsCollection, {
           event: 'interaction',
           type: 'drag',
+          task: 'credit',
           origin_x: currentTransform.x,
           origin_y: currentTransform.y,
           dx: dx,
@@ -223,6 +226,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
           addDoc(eventsCollection, {
             event: 'interaction',
             type: 'hover',
+            task: 'credit',
             point: newData[index].name,
             x: d[xColumn],
             y: d[yColumn],
@@ -260,6 +264,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         addDoc(eventsCollection, {
           event: 'interaction',
           type: 'click',
+          task: 'credit',
           point: newData[index].name,
           category: newData[index].category,
           x: d[xColumn],

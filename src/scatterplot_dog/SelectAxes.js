@@ -77,7 +77,7 @@ function SelectAxes() {
   const [columns, setColumns] = useState([]);
   const [xColumn, setXColumn] = useState(null);
   const [yColumn, setYColumn] = useState(null);
-  const [userId] = useState(localStorage.getItem('userId'));
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
 
   const firebaseConfig = {
     apiKey: "AIzaSyAHS7JCzpZAkLRmgilLdGDp9251l4HOO94",
@@ -145,6 +145,7 @@ function SelectAxes() {
                 addDoc(eventsCollection, {
                   event: 'interaction',
                   type: 'axis_x',
+                  task: 'dog',
                   org_axis: xColumn,
                   new_axis: value,
                   timestamp: new Date(),
@@ -171,6 +172,7 @@ function SelectAxes() {
               addDoc(eventsCollection, {
                 event: 'interaction',
                 type: 'axis_y',
+                task: 'dog',
                 org_axis: yColumn,
                 new_axis: value,
                 timestamp: new Date(),

@@ -23,7 +23,6 @@ function ScatterPlot() {
   const scatterplotRef = useRef(null);
   const webgazer = window.webgazer;
   const [activeButton, setActiveButton] = useState(null);
-  const eventsCollection = collection(firestore, userId);
 
 
   const [userId] = useState(localStorage.getItem('userId'));
@@ -39,6 +38,9 @@ function ScatterPlot() {
   };
   const app = initializeApp(firebaseConfig);
   const firestore = getFirestore(app);
+
+  const eventsCollection = collection(firestore, userId);
+
 
   
   
@@ -149,6 +151,7 @@ function ScatterPlot() {
             addDoc(eventsCollection, {
               event: 'interaction',
               type: 'axis_x',
+              task: 'credit',
               org_axis: xColumn,
               new_axis: value,
               timestamp: new Date(),
@@ -172,6 +175,7 @@ function ScatterPlot() {
             addDoc(eventsCollection, {
               event: 'interaction',
               type: 'axis_y',
+              task: 'credit',
               org_axis: xColumn,
               new_axis: value,
               timestamp: new Date(),
