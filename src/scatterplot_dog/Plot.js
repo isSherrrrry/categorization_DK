@@ -1,14 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import React, { useState, useEffect, useRef } from 'react';
+
 
 import * as d3 from 'd3';
 import './plot.css';
 // import logEvent from '../Logger';
+
+
 
 const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform, setZoomTransform, hovered, setHovered, setPointLabeled, setPointClickedAfterReset, onZoom, onPan }) => {
   const seedableRandom = (seed) => {
     var x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
   }
+  const [userId] = useState(localStorage.getItem('userId'));
+
 
   const jitterScale = d3.scaleLinear().domain([0.1, 30]).range([1, 30]);
   
@@ -43,13 +50,24 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 
   useEffect(() => {
     if (!data || !xColumn || !yColumn) return;
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHS7JCzpZAkLRmgilLdGDp9251l4HOO94",
+      authDomain: "dkeffect-3776d.firebaseapp.com",
+      projectId: "dkeffect-3776d",
+      storageBucket: "dkeffect-3776d.appspot.com",
+      messagingSenderId: "356413199968",
+      appId: "1:356413199968:web:3211cbe960df3c8d4d9505",
+      measurementId: "G-WE3CHELSN1"
+    };
+    const app = initializeApp(firebaseConfig);
+    const firestore = getFirestore(app);
 
     // Add category color property to data
     const updatedData = data.map(d => ({...d, color: getCategoryColor(d.category)}));
 
     const svg = d3.select(svgRef.current);
-    const width = parseInt(svg.attr("width"));
-    const height = parseInt(svg.attr("height"));
+    const width = parseInt(svg.attr("width")) + 20;
+    const height = parseInt(svg.attr("height")) +0;
 
     const xJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
     const yJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
@@ -72,7 +90,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       .ticks(10);
 
     const yGridlines = d3.axisLeft(yScale)
-      .tickSize(-width + 60)
+      .tickSize(-width + 40)
       .tickFormat('')
       .ticks(10);
 
@@ -110,6 +128,16 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
           if (onZoom) {
             onZoom();
           }
+
+          onZoom();
+          const eventsCollection = collection(firestore, userId);
+          addDoc(eventsCollection, {
+            event: 'interaction',
+            type: 'zoom',
+            task: 'dog',
+            zoom_level: event.transform.k,
+            timestamp: new Date(),
+          });
       });
 
     zoomRef.current = zoom;
@@ -155,9 +183,23 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       if (onPan) {
         onPan();
       }
+
+      const eventsCollection = collection(firestore, userId);
+      addDoc(eventsCollection, {
+        event: 'interaction',
+        type: 'drag',
+        task: 'dog',
+        origin_x: currentTransform.x,
+        origin_y: currentTransform.y,
+        dx: dx,
+        dy: dy,
+        timestamp: new Date(),
+      });
     });
 
     svg.call(pan);
+
+    let hoverStartTime = null;
     
     
     const onMouseOver = (event, d) => {
@@ -171,22 +213,42 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
             .style("opacity", 1)
             .style("left", `${event.pageX + 10}px`)
             .style("top", `${event.pageY + 10}px`);
-        // logEvent('INFO', `User hovered over a point with index: ${data.findIndex(el => el === d)}`);
-
+        
+        hoverStartTime = new Date();
         
     };
 
     
     
-    const onMouseOut = () => {
-    d3.select(tooltipRef.current).style("opacity", 0);
+    const onMouseOut = (event, d) => {
+      d3.select(tooltipRef.current).style("opacity", 0);
+      const index = data.findIndex(el => el === d);
+      const newData = [...data];
+      if (hoverStartTime) {
+        const hoverEndTime = new Date();
+        const hoverTime = hoverEndTime - hoverStartTime;
+    
+        const eventsCollection = collection(firestore, userId);
+        addDoc(eventsCollection, {
+          event: 'interaction',
+          type: 'hover',
+          task: 'dog',
+          point: newData[index].name,
+          x: d[xColumn],
+          y: d[yColumn],
+          elapsed_time: hoverTime,
+          timestamp: new Date(),
+        });
+    
+        hoverStartTime = null;
+      }
+    
     };
 
     const onClick = (event, d) => {
       const circle = d3.select(event.target);
       const index = data.findIndex(el => el === d);
       const newData = [...data];
-      // const newCategory = data[index].category === selectedCategory ? null : selectedCategory;
       const newCategory = selectedCategory;
 
 
@@ -206,6 +268,20 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         const currentTransform = d3.zoomTransform(svg.node());
         setZoomTransform(currentTransform);
       }
+
+      const eventsCollection = collection(firestore, userId);
+      addDoc(eventsCollection, {
+        event: 'interaction',
+        type: 'click',
+        task: 'dog',
+        point: newData[index].name,
+        category: newData[index].category,
+        x: d[xColumn],
+        y: d[yColumn],
+        timestamp: new Date(),
+      });
+    
+      // Update state
     };
 
     // Add points
@@ -240,6 +316,8 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     svg.call(zoom);
 
     }, [data, xColumn, yColumn, setData, selectedCategory, setZoomTransform, hovered, setHovered, onZoom, onPan]);
+  
+    
     
 
 return (

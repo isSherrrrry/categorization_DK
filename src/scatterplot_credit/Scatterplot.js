@@ -7,6 +7,9 @@ import { Dropdown } from 'semantic-ui-react';
 import React, { useState, useEffect, useRef } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import './plot.css'
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+
 
 function ScatterPlot() {
   const [data, setData] = useState([]);
@@ -20,6 +23,24 @@ function ScatterPlot() {
   const scatterplotRef = useRef(null);
   const webgazer = window.webgazer;
   const [activeButton, setActiveButton] = useState(null);
+
+
+  const [userId] = useState(localStorage.getItem('userId'));
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyAHS7JCzpZAkLRmgilLdGDp9251l4HOO94",
+    authDomain: "dkeffect-3776d.firebaseapp.com",
+    projectId: "dkeffect-3776d",
+    storageBucket: "dkeffect-3776d.appspot.com",
+    messagingSenderId: "356413199968",
+    appId: "1:356413199968:web:3211cbe960df3c8d4d9505",
+    measurementId: "G-WE3CHELSN1"
+  };
+  const app = initializeApp(firebaseConfig);
+  const firestore = getFirestore(app);
+
+  const eventsCollection = collection(firestore, userId);
+
 
   
   
@@ -77,11 +98,11 @@ function ScatterPlot() {
           webgazer.begin();
           webgazer.showVideoPreview(false).showPredictionPoints(false);
           webgazer.setGazeListener(function(event){
-            var currentdate = new Date(); 
-            var datetime = currentdate.getHours() + ":"  
-                  + currentdate.getMinutes() + ":" 
-                  + currentdate.getSeconds() + ":"
-                  + currentdate.getMilliseconds();
+            addDoc(eventsCollection, {
+              event: 'eyetracking',
+              data: event,
+              timestamp: new Date(),
+            });
             console.log(event);            
           }).begin();
           
@@ -126,7 +147,17 @@ function ScatterPlot() {
               text: column,
               value: column
             }))}
-          onChange={(e, { value }) => setXColumn(value)}
+          onChange={(e, { value }) => {
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              type: 'axis_x',
+              task: 'credit',
+              org_axis: xColumn,
+              new_axis: value,
+              timestamp: new Date(),
+            });
+            setXColumn(value);
+          }}
         />
       </div>
       <div className='y-axis'>
@@ -140,7 +171,17 @@ function ScatterPlot() {
               text: column,
               value: column
             }))}
-          onChange={(e, { value }) => setYColumn(value)}
+          onChange={(e, { value }) => {
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              type: 'axis_y',
+              task: 'credit',
+              org_axis: xColumn,
+              new_axis: value,
+              timestamp: new Date(),
+            });
+            setYColumn(value);
+          }}
         />
       </div>
 
