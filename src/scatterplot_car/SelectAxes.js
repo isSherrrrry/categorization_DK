@@ -4,6 +4,8 @@ import Papa from 'papaparse';
 import { Dropdown } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import './plot.css'
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 const styles = {
   container: {
@@ -67,7 +69,21 @@ function SelectAxes() {
   const [columns, setColumns] = useState([]);
   const [xColumn, setXColumn] = useState(null);
   const [yColumn, setYColumn] = useState(null);
-  
+  const [userId] = useState(localStorage.getItem('userId'));
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAHS7JCzpZAkLRmgilLdGDp9251l4HOO94",
+    authDomain: "dkeffect-3776d.firebaseapp.com",
+    projectId: "dkeffect-3776d",
+    storageBucket: "dkeffect-3776d.appspot.com",
+    messagingSenderId: "356413199968",
+    appId: "1:356413199968:web:3211cbe960df3c8d4d9505",
+    measurementId: "G-WE3CHELSN1"
+  };
+  const app = initializeApp(firebaseConfig);
+  const firestore = getFirestore(app);
+
+
 
   const navigate = useNavigate();
 
@@ -113,7 +129,17 @@ function SelectAxes() {
                   text: column,
                   value: column
                 }))}
-              onChange={(e, { value }) => setXColumn(value)}
+              onChange={(e, { value }) => {
+                const eventsCollection = collection(firestore, userId);
+                addDoc(eventsCollection, {
+                  event: 'interaction',
+                  type: 'axis_x',
+                  org_axis: xColumn,
+                  new_axis: value,
+                  timestamp: new Date(),
+                });
+                setXColumn(value);
+              }}
             />
         </div>
         
@@ -129,7 +155,17 @@ function SelectAxes() {
                 text: column,
                 value: column
               }))}
-            onChange={(e, { value }) => setYColumn(value)}
+            onChange={(e, { value }) => {
+              const eventsCollection = collection(firestore, userId);
+              addDoc(eventsCollection, {
+                event: 'interaction',
+                type: 'axis_y',
+                org_axis: yColumn,
+                new_axis: value,
+                timestamp: new Date(),
+              });
+              setYColumn(value);
+            }}
           />
         </div>
       </div>

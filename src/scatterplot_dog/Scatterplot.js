@@ -6,10 +6,8 @@ import { Dropdown } from 'semantic-ui-react';
 import React, { useState, useEffect, useRef } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import './plot.css'
-import { hover } from '@testing-library/user-event/dist/hover';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import { doc, setDoc } from "firebase/firestore"; 
 
 function ScatterPlot() {
   const [data, setData] = useState([]);
@@ -22,7 +20,7 @@ function ScatterPlot() {
   const navigate = useNavigate();
   const scatterplotRef = useRef(null);
   const [activeButton, setActiveButton] = useState(null);
-  const [userId, setUserId] = useState(localStorage.getItem('userId'));
+  
 
   const [helpVisible, setHelpVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -35,7 +33,7 @@ function ScatterPlot() {
   const [hasZoomed, setHasZoomed] = useState(false);
   const [isPanActive, setIsPanActive] = useState(false);
 
-  
+  const [userId] = useState(localStorage.getItem('userId'));
   
   const firebaseConfig = {
     apiKey: "AIzaSyAHS7JCzpZAkLRmgilLdGDp9251l4HOO94",
@@ -98,18 +96,7 @@ function ScatterPlot() {
   };
 
   const handleXAxisChange = (event) => {
-    const eventsCollection = collection(firestore, userId);
-    addDoc(eventsCollection, {
-      event: 'interaction',
-      type: 'axis_x',
-      org_axis: xColumn,
-      new_axis: location.state.xColumn,
-      timestamp: new Date(),
-    });
-
     setAxisChanged(true);
-
-
   };
 
   const handlePointHover = (event) => {
@@ -220,6 +207,14 @@ const handleYAxisSelection = (e, { value }) => {
               value: column
             }))}
           onChange={(e, { value }) => {
+            const eventsCollection = collection(firestore, userId);
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              type: 'axis_x',
+              org_axis: xColumn,
+              new_axis: value,
+              timestamp: new Date(),
+            });
             setXColumn(value);
             handleXAxisChange();
           }}
@@ -236,7 +231,17 @@ const handleYAxisSelection = (e, { value }) => {
               text: column,
               value: column
             }))}
-          onChange={(e, { value }) => setYColumn(value)}
+          onChange={(e, { value }) => {
+            const eventsCollection = collection(firestore, userId);
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              type: 'axis_y',
+              org_axis: yColumn,
+              new_axis: value,
+              timestamp: new Date(),
+            });
+            setYColumn(value);
+          }}
         />
       </div>
 

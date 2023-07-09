@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import { doc, setDoc } from "firebase/firestore"; 
 import React, { useState, useEffect, useRef } from 'react';
 
 
@@ -15,7 +14,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     var x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
   }
-  const [userId, setUserId] = useState(localStorage.getItem('userId'));
+  const [userId] = useState(localStorage.getItem('userId'));
 
 
   const jitterScale = d3.scaleLinear().domain([0.1, 30]).range([1, 30]);
@@ -63,18 +62,12 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     const app = initializeApp(firebaseConfig);
     const firestore = getFirestore(app);
 
-    const handlePointClick = (event, d) => {
-      // Log the event to Firestore
-      
-      console.log("hello");
-    };
-
     // Add category color property to data
     const updatedData = data.map(d => ({...d, color: getCategoryColor(d.category)}));
 
     const svg = d3.select(svgRef.current);
-    const width = parseInt(svg.attr("width"));
-    const height = parseInt(svg.attr("height"));
+    const width = parseInt(svg.attr("width")) + 20;
+    const height = parseInt(svg.attr("height")) +0;
 
     const xJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
     const yJitter = d3.scaleLinear().domain([0, 1]).range([-10, 10]);
@@ -97,7 +90,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
       .ticks(10);
 
     const yGridlines = d3.axisLeft(yScale)
-      .tickSize(-width + 60)
+      .tickSize(-width + 40)
       .tickFormat('')
       .ticks(10);
 
@@ -207,8 +200,6 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     
     const onMouseOver = (event, d) => {
         const tooltip = d3.select(tooltipRef.current);
-        const index = data.findIndex(el => el === d);
-        const newData = [...data];
         setHovered(true);
         let content = '';
         for (const key in d) {
