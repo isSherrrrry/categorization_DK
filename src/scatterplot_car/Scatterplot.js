@@ -20,7 +20,6 @@ function ScatterPlot() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const scatterplotRef = useRef(null);
   const webgazer = window.webgazer;
   const [activeButton, setActiveButton] = useState(null);
 
@@ -38,7 +37,6 @@ function ScatterPlot() {
   };
   const app = initializeApp(firebaseConfig);
   const firestore = getFirestore(app);
-
   const eventsCollection = collection(firestore, userId);
 
 
