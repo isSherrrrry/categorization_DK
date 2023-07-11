@@ -70,8 +70,12 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
     const updatedData = data.map(d => ({...d, color: getCategoryColor(d.category)}));
 
     const svg = d3.select(svgRef.current);
-    const width = parseInt(svg.attr("width")) + 20;
-    const height = parseInt(svg.attr("height")) +0;
+    // const width = parseInt(svg.attr("width")) + 20;
+    // const height = parseInt(svg.attr("height")) +0;
+    const computedStyle = window.getComputedStyle(svg.node());
+    const width = parseInt(computedStyle.width);
+    const height = parseInt(computedStyle.height);
+
 
     const xScale = d3.scaleLinear()
       .domain(d3.extent(data, d => d[xColumn]))
@@ -323,8 +327,11 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 
 return (
 <div>
-<svg ref={svgRef} width="950" height="450" />
+<div>
+{/* <svg ref={svgRef} width="950" height="450" /> */}
+<svg ref={svgRef} style={{ width: '80vw', height: '80vh' }} />
 <div ref={tooltipRef} className="tooltip" style={{ opacity: 0 }} />
+</div>
 </div>
 );
 };
