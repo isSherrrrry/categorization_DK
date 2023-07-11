@@ -42,13 +42,14 @@ const ConsentForm = () => {
 
   return (
     <div className="presurvey_main">
-      <h1>Pre-Survey</h1>   
-      <p>Your UserID: <b>{userId}</b></p>
-      <p>Please copy and paste <b>{userId}</b> into the dedicated field of the survey</p>
-
-      <p style={{color: 'red', fontWeight: 'bold'}}>Please be sure to scroll through to complete and submit the survey before continuing. 
+      <h1>Pre-Survey</h1> 
+      <div className="textbox">  
+        <p>Your UserID: <b>{userId}</b></p>
+        <p>Please copy and paste <b>{userId}</b> into the dedicated field of the survey</p>
+        <p style={{color: 'red', fontWeight: 'bold'}}>Please be sure to scroll through to complete and submit the survey before continuing. 
         <br></br> A code will be provide to preceed with the study.</p>
-      <div className="input-container" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      </div>
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <div className="userCode">
           <label htmlFor="userCode">Enter the code provided after submitting the survey: </label>
           <Input
