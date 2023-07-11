@@ -72,11 +72,11 @@ function SelectAxes() {
       window.location.reload();
     };
   
-    if (!sessionStorage.getItem("alreadyRefreshed")) {
-      sessionStorage.setItem("alreadyRefreshed", "true");
-      setTimeout(refreshPage, 0);
+    if (!localStorage.getItem("alreadyRefreshed")) {
+      localStorage.setItem("alreadyRefreshed", "true");
+      setTimeout(refreshPage, 0); 
     }
-}, []);
+  }, []);
 
   const navigate = useNavigate();
   
