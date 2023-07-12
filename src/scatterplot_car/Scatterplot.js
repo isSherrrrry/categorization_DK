@@ -90,7 +90,8 @@ function ScatterPlot() {
           webgazer.setGazeListener(function(event){
             addDoc(eventsCollection, {
               event: 'eyetracking',
-              data: event,
+              x: event.x,
+              y: event.y,
               timestamp: new Date(),
             });
             console.log(event);            

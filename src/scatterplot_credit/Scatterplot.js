@@ -26,6 +26,7 @@ function ScatterPlot() {
 
 
   const [userId] = useState(localStorage.getItem('userId'));
+  const [logevent] = useState(null);
   
   const firebaseConfig = {
     apiKey: "AIzaSyAHS7JCzpZAkLRmgilLdGDp9251l4HOO94",
@@ -68,7 +69,6 @@ function ScatterPlot() {
     
   }, [location.state]);
 
-  console.log(localStorage.getItem('first_task'));
 
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
@@ -85,11 +85,11 @@ function ScatterPlot() {
     }
   }
 
-  useEffect(() => {
-    if (scatterplotRef.current) {
-      console.log(scatterplotRef.current.offsetWidth); // Logs the width of the element
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (scatterplotRef.current) {
+  //     console.log(scatterplotRef.current.offsetWidth); // Logs the width of the element
+  //   }
+  // }, []);
 
   useEffect(() => {
     async function initializeWebGazer() {
@@ -100,10 +100,11 @@ function ScatterPlot() {
           webgazer.setGazeListener(function(event){
             addDoc(eventsCollection, {
               event: 'eyetracking',
-              data: event,
+              x: event.x,
+              y: event.y,
               timestamp: new Date(),
             });
-            console.log(event);            
+            console.log(event.x);
           }).begin();
           
           } catch (error) {
@@ -114,6 +115,7 @@ function ScatterPlot() {
     initializeWebGazer();
     return () => {
       initializeWebGazer();
+      
     };
   }, []);
   
