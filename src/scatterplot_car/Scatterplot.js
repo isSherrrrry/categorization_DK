@@ -90,6 +90,7 @@ function ScatterPlot() {
           webgazer.setGazeListener(function(event){
             addDoc(eventsCollection, {
               event: 'eyetracking',
+              task: 'car',
               x: event.x,
               y: event.y,
               timestamp: new Date(),
@@ -135,7 +136,7 @@ function ScatterPlot() {
           placeholder={xColumn}
           selection
           options={columns
-            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID', 'CarType'].includes(column))
+            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID'].includes(column))
             .map(column => ({
               key: `x-${column}`,
               text: column,
@@ -159,7 +160,7 @@ function ScatterPlot() {
           placeholder={yColumn}
           selection
           options={columns
-            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID', 'CarType'].includes(column))
+            .filter(column => !['Customer ID', 'name', 'Credit Score', 'creditID'].includes(column))
             .map(column => ({
               key: `y-${column}`,
               text: column,
