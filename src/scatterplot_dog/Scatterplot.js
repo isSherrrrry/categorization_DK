@@ -8,6 +8,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './plot.css'
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { BiHelpCircle } from 'react-icons/bi';
 
 function ScatterPlot() {
   const [data, setData] = useState([]);
@@ -59,14 +60,17 @@ function ScatterPlot() {
   };
   
   const steps = [
-    { condition: () => !hovered, message: 'Hover on a point to get details regarding it.' },
-    { condition: () => hovered && !axisChanged, message: 'Yay! Change the axes with the drop-down menu. Try changing another axis now to any other attribute you would like.' },
+    { condition: () => !hovered, message: 'Hover over a point to get details regarding it.' },
+    { condition: () => hovered && !axisChanged, message: 'Yay! Change the axes with the drop-down menu. Try changing one of axis to any other attribute you would like.' },
     { condition: () => axisChanged && !hasZoomed, message: 'You may zoom in the scatterplot to see overlapping points.' },
     { condition: () => hasZoomed && !isPanActive, message: 'Yes! You may zoom out or drag the scatterplot and explore different regions' },
     { condition: () => isPanActive && !pointLabeled, message: 'Excellent! Click on one of the BREED buttons (Bernedoodle, ShihTzu, and AmericanBulldog) on the top, then label one of the points in the scatterplot by clicking on it.' },
     { condition: () => pointLabeled && !pointReset, message: 'If you change your mind, select the RESET button.' },
     { condition: () => pointReset && !pointClickedAfterReset, message: 'Then click on the point that you\'d like to reset.' },
-    { condition: () => pointClickedAfterReset && pointLabeled && !helpVisible, message: 'If you need help at any point, hover on the HELP button.' },
+    { condition: () => pointClickedAfterReset && pointLabeled && !helpVisible, message: ['If you need help at any point, hover on the ',
+                                                                                          <BiHelpCircle  style={{ color: '#fff' }} />, 
+                                                                                          <span style={{ color: '#fff' }}>Help</span>,
+                                                                                         ' button in the upper left corner.' ]},
     { condition: () => helpVisible && !allLabeled, message: 'You got it! Before you proceed to the first task, go ahead and label all of the points. Click \'Continue\' when you are done.' }
   ];
   const getCurrentStep = () => {
@@ -177,6 +181,7 @@ const handleYAxisSelection = (e, { value }) => {
       alert('Please make sure you compelete the step-by-step tutorial.');
     } else if (coloredPoints.length < 12) {
       alert('Please color at least 12 points before continuing.');
+      // alert(`You've labeled ${coloredPoints.length} points so far. Please color ${15-coloredPoints.length} more points before continuing.`);
     } else {
       navigate('/intro_formal');
     }
@@ -199,7 +204,8 @@ const handleYAxisSelection = (e, { value }) => {
       </div>
       <div className="hover-container">
         <div className="hover-trigger" onMouseEnter={toggleHelp}>
-          Help
+          <BiHelpCircle size={20} style={{ color: '#fff' }} /> 
+          <span>Help</span>
         </div>
         <div className="info-bar">
           <p>Here's the help text</p>
