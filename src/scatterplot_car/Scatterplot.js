@@ -9,6 +9,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './plot.css'
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { BiHelpCircle } from 'react-icons/bi';
 
 
 function ScatterPlot() {
@@ -114,15 +115,26 @@ function ScatterPlot() {
     <div className="scatterplot">
       <div class="hover-container">
         <div class="hover-trigger">
-          Help
+          <BiHelpCircle size={20} style={{ color: '#fff' }} /> 
+          <span>Help</span>
         </div>
         <div class="info-bar">
           <p>Your task is to <b>categorize all points in the scatterplot</b>.
             <ul>
               <li><b>Hover</b> over a point to see details</li>
+              <li><b>Zoom in/out</b> on the scatterplot to see overlapping points</li>
+              <li><b>Drag </b> the scatterplot to explore different areas of points</li>
               <li><b>Click</b> the colored label on the top corresponding the label you would like to apply</li>
               <li><b>Click</b> the point(s) in the scatterplot to label with the selected label</li>
               <li><b>Click</b> <i>Reset</i> then click the respective point in the scatterplot if you wanted to change your previous label</li>
+            </ul>
+          </p>
+          <p>Data attributes:
+            <ul>
+              <li><b>Hwy MPG:</b> Highway Miles Per Gallon measures a vehicle's fuel efficiency in highway driving conditions.</li>
+            </ul>
+            <ul>
+              <li><b>City MPG:</b> City Miles Per Gallon measures a vehicle's fuel efficiency in urban or city driving conditions.</li>
             </ul>
           </p>
 
