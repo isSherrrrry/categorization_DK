@@ -86,6 +86,27 @@ function ScatterPlot() {
     }
   }
 
+  let hoverStartTime = null;
+  
+  const handleHelpHover = () => {
+    hoverStartTime = new Date();
+  };
+
+  const handleHelpHoverEnd = () => {
+    if (hoverStartTime) {
+      const hoverEndTime = new Date();
+      const hoverDuration = hoverEndTime - hoverStartTime;
+      addDoc(eventsCollection, {
+        event: 'hover',
+        task: 'credit',
+        duration: hoverDuration,
+        timestamp: new Date(),
+      });
+
+      hoverStartTime = null;
+    }
+  };
+
   // useEffect(() => {
   //   if (scatterplotRef.current) {
   //     console.log(scatterplotRef.current.offsetWidth); // Logs the width of the element
@@ -125,7 +146,7 @@ function ScatterPlot() {
   return (
     <div className="scatterplot">
       
-      <div class="hover-container">
+      <div class="hover-container" onMouseOver={handleHelpHover} onMouseOut={handleHelpHoverEnd}>
         <div class="hover-trigger">
           <BiHelpCircle size={20} style={{ color: '#fff' }} /> 
           <span>Help</span>

@@ -187,6 +187,28 @@ const handleYAxisSelection = (e, { value }) => {
     }
   }
 
+  let hoverStartTime = null;
+  
+  const handleHelpHover = () => {
+    hoverStartTime = new Date();
+  };
+
+  const handleHelpHoverEnd = () => {
+    if (hoverStartTime) {
+      const eventsCollection = collection(firestore, userId);
+      const hoverEndTime = new Date();
+      const hoverDuration = hoverEndTime - hoverStartTime;
+      addDoc(eventsCollection, {
+        event: 'hover',
+        task: 'credit',
+        duration: hoverDuration,
+        timestamp: new Date(),
+      });
+
+      hoverStartTime = null;
+    }
+  };
+
 
   const step = getCurrentStep();
 
@@ -202,7 +224,7 @@ const handleYAxisSelection = (e, { value }) => {
         </div>
 
       </div>
-      <div className="hover-container">
+      <div className="hover-container" onMouseOver={handleHelpHover} onMouseOut={handleHelpHoverEnd}>
         <div className="hover-trigger" onMouseEnter={toggleHelp}>
           <BiHelpCircle size={20} style={{ color: '#fff' }} /> 
           <span>Help</span>
