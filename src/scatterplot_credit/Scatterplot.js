@@ -73,7 +73,13 @@ function ScatterPlot() {
 
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
+    const eventsCollection = collection(firestore, userId);
     if (coloredPoints.length >= 25) {
+      addDoc(eventsCollection, {
+        event: 'complete logging',
+        task: 'credit',
+        timestamp: new Date(),
+      });
       if (localStorage.getItem("first_task") == 'credit'){
         navigate('/selectaxis_car');
 
@@ -82,7 +88,8 @@ function ScatterPlot() {
       }
       
     } else {
-      alert('Please color at least 25 points before continuing.');
+      // alert('Please color at least 25 points before continuing.');
+      alert(`Please color at least ${30-coloredPoints.length} more points before continuing.`);
     }
   }
 
