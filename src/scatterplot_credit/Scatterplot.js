@@ -97,11 +97,12 @@ function ScatterPlot() {
       const hoverEndTime = new Date();
       const hoverDuration = hoverEndTime - hoverStartTime;
       addDoc(eventsCollection, {
-        event: 'hover',
+        event: 'help',
         task: 'credit',
         duration: hoverDuration,
         timestamp: new Date(),
       });
+      console.log("hover!!!");
 
       hoverStartTime = null;
     }
@@ -127,7 +128,6 @@ function ScatterPlot() {
               y: event.y,
               timestamp: new Date(),
             });
-            console.log(event.x);
           }).begin();
           
           } catch (error) {

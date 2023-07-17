@@ -199,8 +199,8 @@ const handleYAxisSelection = (e, { value }) => {
       const hoverEndTime = new Date();
       const hoverDuration = hoverEndTime - hoverStartTime;
       addDoc(eventsCollection, {
-        event: 'hover',
-        task: 'credit',
+        event: 'help',
+        task: 'dog',
         duration: hoverDuration,
         timestamp: new Date(),
       });
