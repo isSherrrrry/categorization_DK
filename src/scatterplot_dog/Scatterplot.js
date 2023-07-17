@@ -176,13 +176,19 @@ const handleYAxisSelection = (e, { value }) => {
   // console.log(x);
 
   const handleContinueClick = () => {
+    const eventsCollection = collection(firestore, userId);
     const coloredPoints = data.filter(d => d.category !== null);
     if (!steps[8].condition()) {
       alert('Please make sure you compelete the step-by-step tutorial.');
     } else if (coloredPoints.length < 12) {
-      alert('Please color at least 12 points before continuing.');
+      // alert('Please color at least 12 points before continuing.');
+      alert(`Please color at least ${15-coloredPoints.length} more points before continuing.`);
       // alert(`You've labeled ${coloredPoints.length} points so far. Please color ${15-coloredPoints.length} more points before continuing.`);
     } else {
+      addDoc(eventsCollection, {
+        event: 'complete logging',
+        task: 'dog',
+      });
       navigate('/intro_formal');
     }
   }
