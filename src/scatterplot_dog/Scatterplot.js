@@ -188,6 +188,7 @@ const handleYAxisSelection = (e, { value }) => {
       addDoc(eventsCollection, {
         event: 'complete logging',
         task: 'dog',
+        timestamp: new Date(),
       });
       navigate('/intro_formal');
     }

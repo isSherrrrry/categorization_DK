@@ -78,6 +78,7 @@ function ScatterPlot() {
       addDoc(eventsCollection, {
         event: 'complete logging',
         task: 'credit',
+        timestamp: new Date(),
       });
       if (localStorage.getItem("first_task") == 'credit'){
         navigate('/selectaxis_car');
