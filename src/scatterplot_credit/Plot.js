@@ -316,6 +316,7 @@ return (
 <div>
 <div>
 {/* <svg ref={svgRef} style={{ width: '80vw', height: '80vh' }} /> */}
+{/* <svg ref={svgRef} width="1200" height="630" /> */}
 <svg ref={svgRef} width="1200" height="630" />
 <div ref={tooltipRef} className="tooltip" style={{ opacity: 0 }} />
 </div>
