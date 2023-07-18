@@ -68,9 +68,11 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 
     
       const svg = d3.select(svgRef.current);
-      const computedStyle = window.getComputedStyle(svg.node());
-      const width = parseInt(computedStyle.width);
-      const height = parseInt(computedStyle.height);
+      const width = parseInt(svg.attr("width"));
+      const height = parseInt(svg.attr("height"));
+      // const computedStyle = window.getComputedStyle(svg.node());
+      // const width = parseInt(computedStyle.width);
+      // const height = parseInt(computedStyle.height);
   
 
 
@@ -313,7 +315,9 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
 return (
 <div>
 <div>
-<svg ref={svgRef} style={{ width: '80vw', height: '80vh' }} />
+{/* <svg ref={svgRef} style={{ width: '80vw', height: '80vh' }} /> */}
+{/* <svg ref={svgRef} width="1200" height="630" /> */}
+<svg ref={svgRef} width="1200" height="630" />
 <div ref={tooltipRef} className="tooltip" style={{ opacity: 0 }} />
 </div>
 </div>
