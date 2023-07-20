@@ -99,6 +99,8 @@ function ScatterPlot() {
   const handleClick = (event) => {
     const x = event.clientX;
     const y = event.clientY;
+    const screenWidth = window.screen.width;
+    const screenHeight = window.screen.height;
     // Log the click event to Firestore
     const eventsCollection = collection(firestore, userId);
     addDoc(eventsCollection, {
@@ -107,8 +109,11 @@ function ScatterPlot() {
       task: 'credit',
       x: x,
       y: y,
+      screenWidth: screenWidth,
+      screenHeight: screenHeight,
       timestamp: new Date(),
     });
+    console.log(x);
   };
 
   useEffect(() => {
@@ -165,6 +170,7 @@ function ScatterPlot() {
               timestamp: new Date(),
             });
           }).begin();
+          console.log("yesyes");
           
           } catch (error) {
           console.error('Error initializing WebGazer:', error);

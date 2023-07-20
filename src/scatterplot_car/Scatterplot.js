@@ -93,6 +93,8 @@ function ScatterPlot() {
   const handleClick = (event) => {
     const x = event.clientX;
     const y = event.clientY;
+    const screenWidth = window.screen.width;
+    const screenHeight = window.screen.height;
     // Log the click event to Firestore
     const eventsCollection = collection(firestore, userId);
     addDoc(eventsCollection, {
@@ -101,6 +103,8 @@ function ScatterPlot() {
       task: 'car',
       x: x,
       y: y,
+      screenWidth: screenWidth,
+      screenHeight: screenHeight,
       timestamp: new Date(),
     });
   };

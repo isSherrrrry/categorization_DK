@@ -1,8 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-// import './mac-osx.css';
-import { motion } from "framer-motion";
 import { FaArrowRight } from 'react-icons/fa';
 
 const styles = {
@@ -15,7 +13,6 @@ const styles = {
     textAlign: 'center',
     fontFamily: 'Arial, sans-serif',
     color: '#333',
-    // background: 'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)',
     background: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
     padding: '30px'
   },

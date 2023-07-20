@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect} from 'react';
 import { Checkbox, Button } from 'semantic-ui-react';
@@ -11,7 +10,6 @@ function ScatterPlot() {
     const navigate = useNavigate();
     const webgazer = window.webgazer;
     const [isChecked, setIsChecked] = useState(false);
-    const [player, setPlayer] = useState(null);
     const [videoPlayed, setVideoPlayed] = useState(false); 
 
     const handleContinueClick = () => {

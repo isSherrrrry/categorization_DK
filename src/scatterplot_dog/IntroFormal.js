@@ -1,8 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-// import './mac-osx.css';
-import { motion } from "framer-motion";
 import { FaArrowRight } from 'react-icons/fa';
 
 

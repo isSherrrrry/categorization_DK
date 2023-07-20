@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import { Input, Button } from "semantic-ui-react";
-import { useNavigate } from "react-router-dom";
 
 import "semantic-ui-css/semantic.min.css";
 import "./presurvey.css";
-import { useSpring, animated } from 'react-spring';
-import { FaRegSmileBeam } from 'react-icons/fa';
-import { RiEmotionHappyLine } from 'react-icons/ri';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input, Button } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
-import { nanoid } from 'nanoid';
 
 
 import "semantic-ui-css/semantic.min.css";
