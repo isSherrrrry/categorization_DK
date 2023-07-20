@@ -89,6 +89,28 @@ function ScatterPlot() {
     }
   };
 
+  const handleClick = (event) => {
+    const x = event.clientX;
+    const y = event.clientY;
+    // Log the click event to Firestore
+    const eventsCollection = collection(firestore, userId);
+    addDoc(eventsCollection, {
+      event: 'click',
+      task: 'car',
+      x: x,
+      y: y,
+      timestamp: new Date(),
+    });
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick);
+  
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
+
   let hoverStartTime = null;
   
   const handleHelpHover = () => {

@@ -70,6 +70,8 @@ function ScatterPlot() {
     
   }, [location.state]);
 
+  
+
 
   const handleContinueClick = () => {
     const coloredPoints = data.filter(d => d.category !== null);
@@ -92,6 +94,28 @@ function ScatterPlot() {
       alert(`Please color at least ${30-coloredPoints.length} more points before continuing.`);
     }
   }
+
+  const handleClick = (event) => {
+    const x = event.clientX;
+    const y = event.clientY;
+    // Log the click event to Firestore
+    const eventsCollection = collection(firestore, userId);
+    addDoc(eventsCollection, {
+      event: 'click',
+      task: 'credit',
+      x: x,
+      y: y,
+      timestamp: new Date(),
+    });
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick);
+  
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
 
   let hoverStartTime = null;
   

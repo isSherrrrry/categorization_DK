@@ -172,9 +172,6 @@ const handleYAxisSelection = (e, { value }) => {
     }
   }, [location.state]);
 
-  // let x = Math.floor((Math.random() * 10) + 1);
-  // console.log(x);
-
   const handleContinueClick = () => {
     const eventsCollection = collection(firestore, userId);
     const coloredPoints = data.filter(d => d.category !== null);
