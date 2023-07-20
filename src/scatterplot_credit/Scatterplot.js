@@ -79,6 +79,7 @@ function ScatterPlot() {
     if (coloredPoints.length >= 25) {
       addDoc(eventsCollection, {
         event: 'complete logging',
+        userID: userId,
         task: 'credit',
         timestamp: new Date(),
       });
@@ -102,6 +103,7 @@ function ScatterPlot() {
     const eventsCollection = collection(firestore, userId);
     addDoc(eventsCollection, {
       event: 'click',
+      userID: userId,
       task: 'credit',
       x: x,
       y: y,
@@ -128,7 +130,9 @@ function ScatterPlot() {
       const hoverEndTime = new Date();
       const hoverDuration = hoverEndTime - hoverStartTime;
       addDoc(eventsCollection, {
-        event: 'help',
+        event: 'interaction',
+        type:'help',
+        userID: userId,
         task: 'credit',
         duration: hoverDuration,
         timestamp: new Date(),
@@ -154,6 +158,7 @@ function ScatterPlot() {
           webgazer.setGazeListener(function(event){
             addDoc(eventsCollection, {
               event: 'eyetracking',
+              userID: userId,
               task: 'credit',
               x: event.x,
               y: event.y,
@@ -214,6 +219,7 @@ function ScatterPlot() {
           onChange={(e, { value }) => {
             addDoc(eventsCollection, {
               event: 'interaction',
+              userID: userId,
               type: 'axis_x',
               task: 'credit',
               org_axis: xColumn,
@@ -238,6 +244,7 @@ function ScatterPlot() {
           onChange={(e, { value }) => {
             addDoc(eventsCollection, {
               event: 'interaction',
+              userID: userId,
               type: 'axis_y',
               task: 'credit',
               org_axis: xColumn,

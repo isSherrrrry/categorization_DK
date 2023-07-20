@@ -48,6 +48,8 @@ function ScatterPlot() {
   const app = initializeApp(firebaseConfig);
   const firestore = getFirestore(app);
 
+  
+
   const [currentStep, setCurrentStep] = useState(0);
 
   const nextStep = () => {
@@ -184,6 +186,7 @@ const handleYAxisSelection = (e, { value }) => {
     } else {
       addDoc(eventsCollection, {
         event: 'complete logging',
+        userID: userId,
         task: 'dog',
         timestamp: new Date(),
       });
@@ -203,7 +206,9 @@ const handleYAxisSelection = (e, { value }) => {
       const hoverEndTime = new Date();
       const hoverDuration = hoverEndTime - hoverStartTime;
       addDoc(eventsCollection, {
-        event: 'help',
+        event: 'interaction',
+        type: 'help',
+        userID: userId,
         task: 'dog',
         duration: hoverDuration,
         timestamp: new Date(),
@@ -252,6 +257,7 @@ const handleYAxisSelection = (e, { value }) => {
             const eventsCollection = collection(firestore, userId);
             addDoc(eventsCollection, {
               event: 'interaction',
+              userID: userId,
               type: 'axis_x',
               task: 'dog',
               org_axis: xColumn,
@@ -278,6 +284,7 @@ const handleYAxisSelection = (e, { value }) => {
             const eventsCollection = collection(firestore, userId);
             addDoc(eventsCollection, {
               event: 'interaction',
+              userID: userId,
               type: 'axis_y',
               task: 'dog',
               org_axis: yColumn,

@@ -130,6 +130,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         const eventsCollection = collection(firestore, userId);
         addDoc(eventsCollection, {
           event: 'interaction',
+          userID: userId,
           type: 'zoom',
           task: 'car',
           zoom_level: event.transform.k,
@@ -180,6 +181,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         const eventsCollection = collection(firestore, userId);
         addDoc(eventsCollection, {
           event: 'interaction',
+          userID: userId,
           type: 'drag',
           task: 'car',
           origin_x: currentTransform.x,
@@ -221,6 +223,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
           const eventsCollection = collection(firestore, userId);
           addDoc(eventsCollection, {
             event: 'interaction',
+            userID: userId,
             type: 'hover',
             task: 'car',
             point: newData[index].name,
@@ -256,6 +259,7 @@ const Plot = ({ data, xColumn, yColumn, selectedCategory, setData, zoomTransform
         const eventsCollection = collection(firestore, userId);
         addDoc(eventsCollection, {
           event: 'interaction',
+          userID: userId,
           type: 'click',
           task: 'car',
           point: newData[index].name,

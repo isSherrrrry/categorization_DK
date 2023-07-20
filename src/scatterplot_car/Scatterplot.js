@@ -74,6 +74,7 @@ function ScatterPlot() {
     if (coloredPoints.length >= 25) {
       addDoc(eventsCollection, {
         event: 'complete logging',
+        userID: userId,
         task: 'car',
         timestamp: new Date(),
       });
@@ -96,6 +97,7 @@ function ScatterPlot() {
     const eventsCollection = collection(firestore, userId);
     addDoc(eventsCollection, {
       event: 'click',
+      userID: userId,
       task: 'car',
       x: x,
       y: y,
@@ -123,7 +125,9 @@ function ScatterPlot() {
       const hoverEndTime = new Date();
       const hoverDuration = hoverEndTime - hoverStartTime;
       addDoc(eventsCollection, {
-        event: 'help',
+        event: 'interation',
+        type: 'help',
+        userID: userId,
         task: 'car',
         duration: hoverDuration,
         timestamp: new Date(),
@@ -143,6 +147,7 @@ function ScatterPlot() {
             addDoc(eventsCollection, {
               event: 'eyetracking',
               task: 'car',
+              userID: userId,
               x: event.x,
               y: event.y,
               timestamp: new Date(),
@@ -209,6 +214,7 @@ function ScatterPlot() {
             addDoc(eventsCollection, {
               event: 'interaction',
               type: 'axis_x',
+              userID: userId,
               task: 'car',
               org_axis: xColumn,
               new_axis: value,
@@ -233,6 +239,7 @@ function ScatterPlot() {
             addDoc(eventsCollection, {
               event: 'interaction',
               type: 'axis_y',
+              userID: userId,
               task: 'car',
               org_axis: xColumn,
               new_axis: value,

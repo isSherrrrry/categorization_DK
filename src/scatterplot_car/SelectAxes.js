@@ -134,6 +134,7 @@ function SelectAxes() {
                 addDoc(eventsCollection, {
                   event: 'interaction',
                   type: 'axis_x',
+                  userID: userId,
                   task: 'car',
                   org_axis: xColumn,
                   new_axis: value,
@@ -161,6 +162,7 @@ function SelectAxes() {
               addDoc(eventsCollection, {
                 event: 'interaction',
                 type: 'axis_y',
+                userID: userId,
                 task: 'car',
                 org_axis: yColumn,
                 new_axis: value,

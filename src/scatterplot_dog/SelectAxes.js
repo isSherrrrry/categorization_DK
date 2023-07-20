@@ -149,6 +149,7 @@ function SelectAxes() {
                 const eventsCollection = collection(firestore, userId);
                 addDoc(eventsCollection, {
                   event: 'interaction',
+                  userID: userId,
                   type: 'axis_x',
                   task: 'dog',
                   org_axis: xColumn,
@@ -176,6 +177,7 @@ function SelectAxes() {
               const eventsCollection = collection(firestore, userId);
               addDoc(eventsCollection, {
                 event: 'interaction',
+                userID: userId,
                 type: 'axis_y',
                 task: 'dog',
                 org_axis: yColumn,
