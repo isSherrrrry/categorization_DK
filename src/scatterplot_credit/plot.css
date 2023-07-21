@@ -77,13 +77,13 @@
 }
 
 .Good_button{
-  background-color: #2ca02c94 !important;
+  background-color: #2ca02c78 !important;
 }
 .Fair_button{
-  background-color: #ff7e0ec0 !important;
+  background-color: #ff7e0e77 !important;
 }
 .Poor_button{
-  background-color: #1f76b4b0 !important;
+  background-color: #1f76b486 !important;
 }
 
 .ui.button.Good_button:hover {
@@ -108,6 +108,22 @@
   background-color: #9da1a4f1 !important;  
   border-width: 2px !important;  
   border-color: #000 !important;  
+}
+
+.Good_button.active {
+  background-color: #2ca02ce5 !important; 
+}
+
+.Fair_button.active {
+  background-color:  #ff7e0ee9 !important; 
+}
+
+.Poor_button.active {
+  background-color: #1f76b4f1 !important; 
+}
+
+.reset_button.active {
+  background-color: #9da1a4f1 !important; 
 }
 
 .scatterplot_plot{

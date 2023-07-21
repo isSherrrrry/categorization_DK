@@ -52,13 +52,13 @@
 }
 
 .SUV_button{
-  background-color: #2ca02c94 !important;
+  background-color: #2ca02c78 !important;
 }
 .Minivan_button{
-  background-color: #ff7e0ec0 !important;
+  background-color: #ff7e0e77 !important;
 }
 .Sedan_button{
-  background-color: #1f76b4b0 !important;
+  background-color: #1f76b486 !important;
 }
 
 
@@ -84,6 +84,22 @@
   background-color: #9da1a4f1 !important;  
   border-width: 2px !important;  
   border-color: #000 !important;  
+}
+
+.SUV_button.active {
+  background-color: #2ca02ce5 !important; 
+}
+
+.Minivan_button.active {
+  background-color:  #ff7e0ee9 !important; 
+}
+
+.Sedan_button.active {
+  background-color: #1f76b4f1 !important; 
+}
+
+.reset_button.active {
+  background-color: #9da1a4f1 !important; 
 }
 
 .scatterplot_plot{

@@ -93,8 +93,8 @@ function ScatterPlot() {
   const handleClick = (event) => {
     const x = event.clientX;
     const y = event.clientY;
-    const viewWidth = window.innerWidth;
-    const viewHeight = window.innerHeight;
+    const viewWidth = window.screen.width;
+    const viewHeight = window.screen.height;
     const normalizedX = x/viewWidth;
     const normalizedy = y/viewHeight;
     // Log the click event to Firestore
@@ -152,8 +152,8 @@ function ScatterPlot() {
           webgazer.begin();
           webgazer.showVideoPreview(false).showPredictionPoints(false);
           webgazer.setGazeListener(function(event){
-            const viewWidth = window.innerWidth;
-            const viewHeight = window.innerHeight;
+            const viewWidth = window.screen.width;
+            const viewHeight = window.screen.height;
             addDoc(eventsCollection, {
               event: 'eyetracking',
               task: 'car',
