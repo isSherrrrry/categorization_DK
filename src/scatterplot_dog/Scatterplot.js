@@ -292,6 +292,7 @@ const handleYAxisSelection = (e, { value }) => {
               timestamp: new Date(),
             });
             setYColumn(value);
+            handleXAxisChange();
           }}
         />
       </div>
