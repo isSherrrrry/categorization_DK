@@ -74,7 +74,7 @@ function ScatterPlot() {
                 opts={videoOptions}
                 onStateChange={onPlayerStateChange}
             />
-            <p style={{ color: 'red', fontWeight: 'bold', fontSize: '17px', marginBottom: '5px'}}>The video window will be hidden in subsequent study and please try to maintain this position for the rest of the study</p>
+            <p style={{ color: 'red', fontWeight: 'bold', fontSize: '16px', marginBottom: '5px'}}>The video window will be hidden for the remainder of the study. Please try to maintain this position for the rest of the study.</p>
           
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
 
