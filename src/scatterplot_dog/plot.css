@@ -48,13 +48,10 @@
   position: fixed;
   left: 1vw !important;
   top: 50vh !important;
-  /* margin-top: 50px;
-  margin-left: -15px; */
-
 }
 
 .continue_next{
-  position: absolute;
+  position: fixed;
   top: 93vh !important;
   left: 90vw !important;
 }

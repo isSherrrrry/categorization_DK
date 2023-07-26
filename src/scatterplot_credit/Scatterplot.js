@@ -233,6 +233,18 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              userID: userId,
+              type: 'axis_x',
+              task: 'credit',
+              org_axis: xColumn,
+              new_axis: value,
+              timestamp: new Date(),
+            });
+            setXColumn(value);
+          }}
+          onClick={e => {
             const x = e.clientX;
             const y = e.clientY;
             const viewWidth = window.screen.width;
@@ -242,10 +254,8 @@ function ScatterPlot() {
             addDoc(eventsCollection, {
               event: 'interaction',
               userID: userId,
-              type: 'axis_x',
+              type: 'click_axis_x',
               task: 'credit',
-              org_axis: xColumn,
-              new_axis: value,
               x: x,
               y: y,
               normalizedX: normalizedX,
@@ -254,7 +264,6 @@ function ScatterPlot() {
               viewHeight: viewHeight,
               timestamp: new Date(),
             });
-            setXColumn(value);
           }}
         />
       </div>
@@ -270,6 +279,18 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              userID: userId,
+              type: 'axis_y',
+              task: 'credit',
+              org_axis: xColumn,
+              new_axis: value,
+              timestamp: new Date(),
+            });
+            setYColumn(value);
+          }}
+          onClick={e => {
             const x = e.clientX;
             const y = e.clientY;
             const viewWidth = window.screen.width;
@@ -279,10 +300,8 @@ function ScatterPlot() {
             addDoc(eventsCollection, {
               event: 'interaction',
               userID: userId,
-              type: 'axis_y',
+              type: 'click_axis_y',
               task: 'credit',
-              org_axis: xColumn,
-              new_axis: value,
               x: x,
               y: y,
               normalizedX: normalizedX,
@@ -291,7 +310,6 @@ function ScatterPlot() {
               viewHeight: viewHeight,
               timestamp: new Date(),
             });
-            setYColumn(value);
           }}
         />
       </div>

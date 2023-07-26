@@ -225,6 +225,18 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              type: 'axis_x',
+              userID: userId,
+              task: 'car',
+              org_axis: xColumn,
+              new_axis: value,
+              timestamp: new Date(),
+            });
+            setXColumn(value);
+          }}
+          onClick={e => {
             const x = e.clientX;
             const y = e.clientY;
             const viewWidth = window.screen.width;
@@ -233,11 +245,9 @@ function ScatterPlot() {
             const normalizedy = y/viewHeight;
             addDoc(eventsCollection, {
               event: 'interaction',
-              type: 'axis_x',
               userID: userId,
-              task: 'car',
-              org_axis: xColumn,
-              new_axis: value,
+              type: 'click_axis_x',
+              task: 'credit',
               x: x,
               y: y,
               normalizedX: normalizedX,
@@ -246,7 +256,6 @@ function ScatterPlot() {
               viewHeight: viewHeight,
               timestamp: new Date(),
             });
-            setXColumn(value);
           }}
         />
       </div>
@@ -262,6 +271,18 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              type: 'axis_y',
+              userID: userId,
+              task: 'car',
+              org_axis: xColumn,
+              new_axis: value,
+              timestamp: new Date(),
+            });
+            setYColumn(value);
+          }}
+          onClick={e => {
             const x = e.clientX;
             const y = e.clientY;
             const viewWidth = window.screen.width;
@@ -270,11 +291,9 @@ function ScatterPlot() {
             const normalizedy = y/viewHeight;
             addDoc(eventsCollection, {
               event: 'interaction',
-              type: 'axis_y',
               userID: userId,
-              task: 'car',
-              org_axis: xColumn,
-              new_axis: value,
+              type: 'click_axis_y',
+              task: 'credit',
               x: x,
               y: y,
               normalizedX: normalizedX,
@@ -283,7 +302,6 @@ function ScatterPlot() {
               viewHeight: viewHeight,
               timestamp: new Date(),
             });
-            setYColumn(value);
           }}
         />
       </div>
