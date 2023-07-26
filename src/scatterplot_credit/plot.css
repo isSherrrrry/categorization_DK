@@ -1,5 +1,5 @@
 .scatterplot{
-  position: relative;
+  position: fixed !important;
   /* width: 100%;
   height: 400px !important; */
   display: flex;
@@ -34,29 +34,22 @@
 }
 
 .x-axis{
-  position: absolute;
-  top: 91vh;
-  left:50vw;
-  /* margin-top: -10px; */
+  position: fixed;
+  top: 93vh !important;
+  left: 50vw !important;
 }
 
 .y-axis{
-  position: absolute;
-  /* left: 10px; */
-  left:2vw;
-  top: 40vh;
+  position: fixed;
+  left: 1vw !important;
+  top: 50vh !important;
   z-index: 1;
-  /* margin-top: 50px;
-  margin-left: -15px; */
 }
 
 .continue_next{
-  position: absolute;
-  top: 90vh;
-  left: 90vw;
-  /* bottom: -375px !important;   */
-  /* right: 100px; */
-  /* margin-bottom: 20px !important; */
+  position: fixed;
+  top: 93vh !important;
+  left: 90vw !important;
 }
 
 .select_axes{

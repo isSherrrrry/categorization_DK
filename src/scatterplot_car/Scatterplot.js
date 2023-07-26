@@ -78,7 +78,7 @@ function ScatterPlot() {
         task: 'car',
         timestamp: new Date(),
       });
-      if (localStorage.getItem("first_task") == 'car'){
+      if (localStorage.getItem("first_task") === 'car'){
         navigate('/selectaxis_credit');
       } else {
         navigate('/stop_tracking');   
