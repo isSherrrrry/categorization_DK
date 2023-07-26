@@ -165,6 +165,8 @@ const handleYAxisSelection = (e, { value }) => {
       setColumns(parsedData.meta.fields);
     };
     fetchData();
+    // console.log('Viewport width:', window.innerWidth);
+    // console.log('Viewport height:', window.innerHeight);
   }, []);
 
   useEffect(() => {

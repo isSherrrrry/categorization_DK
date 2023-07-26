@@ -28,6 +28,7 @@ function ScatterPlot() {
 
   const [userId] = useState(localStorage.getItem('userId'));
   const [logevent] = useState(null);
+
   
   const firebaseConfig = {
     apiKey: "AIzaSyAHS7JCzpZAkLRmgilLdGDp9251l4HOO94",
@@ -59,6 +60,7 @@ function ScatterPlot() {
       setColumns(parsedData.meta.fields);
     };
     fetchData();
+
   }, []);
 
 
@@ -99,8 +101,8 @@ function ScatterPlot() {
   const handleClick = (event) => {
     const x = event.clientX;
     const y = event.clientY;
-    const viewWidth = window.screen.width;
-    const viewHeight = window.screen.height;
+    const viewWidth = window.innerWidth;
+    const viewHeight = window.innerHeight;
     const normalizedX = x/viewWidth;
     const normalizedy = y/viewHeight;
     // Log the click event to Firestore
@@ -165,8 +167,8 @@ function ScatterPlot() {
           webgazer.begin();
           webgazer.showVideoPreview(false).showPredictionPoints(false);
           webgazer.setGazeListener(function(event){
-            const viewWidth = window.screen.width;
-            const viewHeight = window.screen.height;
+            const viewWidth = window.innerWidth;
+            const viewHeight = window.innerHeight;
             addDoc(eventsCollection, {
               event: 'eyetracking',
               userID: userId,
@@ -233,12 +235,6 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
-            const x = e.clientX;
-            const y = e.clientY;
-            const viewWidth = window.screen.width;
-            const viewHeight = window.screen.height;
-            const normalizedX = x/viewWidth;
-            const normalizedy = y/viewHeight;
             addDoc(eventsCollection, {
               event: 'interaction',
               userID: userId,
@@ -246,6 +242,22 @@ function ScatterPlot() {
               task: 'credit',
               org_axis: xColumn,
               new_axis: value,
+              timestamp: new Date(),
+            });
+            setXColumn(value);
+          }}
+          onClick={e => {
+            const x = e.clientX;
+            const y = e.clientY;
+            const viewWidth = window.innerWidth;
+            const viewHeight = window.innerHeight;
+            const normalizedX = x/viewWidth;
+            const normalizedy = y/viewHeight;
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              userID: userId,
+              type: 'click_axis_x',
+              task: 'credit',
               x: x,
               y: y,
               normalizedX: normalizedX,
@@ -254,7 +266,6 @@ function ScatterPlot() {
               viewHeight: viewHeight,
               timestamp: new Date(),
             });
-            setXColumn(value);
           }}
         />
       </div>
@@ -270,12 +281,6 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
-            const x = e.clientX;
-            const y = e.clientY;
-            const viewWidth = window.screen.width;
-            const viewHeight = window.screen.height;
-            const normalizedX = x/viewWidth;
-            const normalizedy = y/viewHeight;
             addDoc(eventsCollection, {
               event: 'interaction',
               userID: userId,
@@ -283,6 +288,22 @@ function ScatterPlot() {
               task: 'credit',
               org_axis: xColumn,
               new_axis: value,
+              timestamp: new Date(),
+            });
+            setYColumn(value);
+          }}
+          onClick={e => {
+            const x = e.clientX;
+            const y = e.clientY;
+            const viewWidth = window.innerWidth;
+            const viewHeight = window.innerHeight;
+            const normalizedX = x/viewWidth;
+            const normalizedy = y/viewHeight;
+            addDoc(eventsCollection, {
+              event: 'interaction',
+              userID: userId,
+              type: 'click_axis_y',
+              task: 'credit',
               x: x,
               y: y,
               normalizedX: normalizedX,
@@ -291,7 +312,6 @@ function ScatterPlot() {
               viewHeight: viewHeight,
               timestamp: new Date(),
             });
-            setYColumn(value);
           }}
         />
       </div>
