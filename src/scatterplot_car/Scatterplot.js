@@ -78,7 +78,7 @@ function ScatterPlot() {
         task: 'car',
         timestamp: new Date(),
       });
-      if (localStorage.getItem("first_task") == 'car'){
+      if (localStorage.getItem("first_task") === 'car'){
         navigate('/selectaxis_credit');
       } else {
         navigate('/stop_tracking');   
@@ -225,6 +225,12 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            const viewWidth = window.screen.width;
+            const viewHeight = window.screen.height;
+            const normalizedX = x/viewWidth;
+            const normalizedy = y/viewHeight;
             addDoc(eventsCollection, {
               event: 'interaction',
               type: 'axis_x',
@@ -232,6 +238,12 @@ function ScatterPlot() {
               task: 'car',
               org_axis: xColumn,
               new_axis: value,
+              x: x,
+              y: y,
+              normalizedX: normalizedX,
+              normalizedy: normalizedy,
+              viewWidth: viewWidth,
+              viewHeight: viewHeight,
               timestamp: new Date(),
             });
             setXColumn(value);
@@ -250,6 +262,12 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            const viewWidth = window.screen.width;
+            const viewHeight = window.screen.height;
+            const normalizedX = x/viewWidth;
+            const normalizedy = y/viewHeight;
             addDoc(eventsCollection, {
               event: 'interaction',
               type: 'axis_y',
@@ -257,6 +275,12 @@ function ScatterPlot() {
               task: 'car',
               org_axis: xColumn,
               new_axis: value,
+              x: x,
+              y: y,
+              normalizedX: normalizedX,
+              normalizedy: normalizedy,
+              viewWidth: viewWidth,
+              viewHeight: viewHeight,
               timestamp: new Date(),
             });
             setYColumn(value);

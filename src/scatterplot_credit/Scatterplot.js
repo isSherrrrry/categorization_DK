@@ -233,6 +233,12 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            const viewWidth = window.screen.width;
+            const viewHeight = window.screen.height;
+            const normalizedX = x/viewWidth;
+            const normalizedy = y/viewHeight;
             addDoc(eventsCollection, {
               event: 'interaction',
               userID: userId,
@@ -240,6 +246,12 @@ function ScatterPlot() {
               task: 'credit',
               org_axis: xColumn,
               new_axis: value,
+              x: x,
+              y: y,
+              normalizedX: normalizedX,
+              normalizedy: normalizedy,
+              viewWidth: viewWidth,
+              viewHeight: viewHeight,
               timestamp: new Date(),
             });
             setXColumn(value);
@@ -258,6 +270,12 @@ function ScatterPlot() {
               value: column
             }))}
           onChange={(e, { value }) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            const viewWidth = window.screen.width;
+            const viewHeight = window.screen.height;
+            const normalizedX = x/viewWidth;
+            const normalizedy = y/viewHeight;
             addDoc(eventsCollection, {
               event: 'interaction',
               userID: userId,
@@ -265,6 +283,12 @@ function ScatterPlot() {
               task: 'credit',
               org_axis: xColumn,
               new_axis: value,
+              x: x,
+              y: y,
+              normalizedX: normalizedX,
+              normalizedy: normalizedy,
+              viewWidth: viewWidth,
+              viewHeight: viewHeight,
               timestamp: new Date(),
             });
             setYColumn(value);
