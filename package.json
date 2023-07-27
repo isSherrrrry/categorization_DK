@@ -41,7 +41,7 @@
     "webgazer": "^3.1.2"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "heroku-postbuild": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
