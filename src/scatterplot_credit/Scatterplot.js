@@ -79,10 +79,14 @@ function ScatterPlot() {
     const coloredPoints = data.filter(d => d.category !== null);
     const eventsCollection = collection(firestore, userId);
     if (coloredPoints.length >= 25) {
+      const screenWidth = window.screen.width;
+      const screenHeight = window.screen.height;
       addDoc(eventsCollection, {
         event: 'complete logging',
         userID: userId,
         task: 'credit',
+        screenWidth: screenWidth,
+        screenHeight: screenHeight,
         timestamp: new Date(),
       });
       if (localStorage.getItem("first_task") == 'credit'){
@@ -136,16 +140,28 @@ function ScatterPlot() {
     hoverStartTime = new Date();
   };
 
-  const handleHelpHoverEnd = () => {
+  const handleHelpHoverEnd = (event) => {
     if (hoverStartTime) {
       const hoverEndTime = new Date();
       const hoverDuration = hoverEndTime - hoverStartTime;
+      const x = event.clientX;
+      const y = event.clientY;
+      const viewWidth = window.innerWidth;
+      const viewHeight = window.innerHeight;
+      const normalizedX = x/viewWidth;
+      const normalizedy = y/viewHeight;
       addDoc(eventsCollection, {
         event: 'interaction',
         type:'help',
         userID: userId,
         task: 'credit',
         duration: hoverDuration,
+        x: x,
+        y: y,
+        normalizedX: normalizedX,
+        normalizedy: normalizedy,
+        viewWidth: viewWidth,
+        viewHeight: viewHeight,
         timestamp: new Date(),
       });
       console.log("hover!!!");
